@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mishra Vault IAT Mock 1</title>
+<style>
+body{
+font-family:Arial;
+background:#111;
+color:white;
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+.box{
+background:#1d1d1d;
+padding:30px;
+border-radius:18px;
+}
+button{
+padding:12px 24px;
+margin:10px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+#timer{
+font-size:24px;
+margin-bottom:20px;
+}
+.option{
+display:block;
+margin:14px 0;
+padding:12px;
+background:#2b2b2b;
+border-radius:8px;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+
+<h1>MISHRA VAULT — IAT MOCK TEST 1</h1>
+
+<input id="name" placeholder="Your Name">
+<input id="email" placeholder="Email">
+
+<h2 id="timer">180:00</h2>
+
+<div id="quiz"></div>
+
+<button onclick="prevQ()">Previous</button>
+<button onclick="nextQ()">Next</button>
+<button onclick="submitTest()">Submit Test</button>
+
+</div>
+
+<script>
+
+const questions=[
+
+{
+subject:"Physics",
+q:"A projectile has maximum range at angle:",
+options:["30°","45°","60°","90°"],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"SI unit of electric flux?",
+options:["N/C","Nm²/C","C/N","Volt"],
+answer:1
+},
+
+{
+subject:"Chemistry",
+q:"pH of neutral water:",
+options:["5","6","7","8"],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Hybridization in methane:",
+options:["sp","sp2","sp3","dsp2"],
+answer:2
+},
+
+{
+subject:"Math",
+q:"Derivative of sin x:",
+options:["cosx","-cosx","tanx","secx"],
+answer:0
+},
+
+{
+subject:"Math",
+q:"∫1/x dx =",
+options:["lnx","x²","1/x²","e^x"],
+answer:0
+},
+
+{
+subject:"Biology",
+q:"Powerhouse of cell:",
+options:["Nucleus","Mitochondria","Golgi","Ribosome"],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Mendel worked on:",
+options:["Pea","Rice","Wheat","Maize"],
+answer:0
+}
+
+];
+
+let current=0;
+let responses=new Array(questions.length).fill(null);
+
+function loadQ(){
+
+let q=questions[current];
+
+let html=`
+<h2>Q${current+1} (${q.subject})</h2>
+<h3>${q.q}</h3>
+`;
+
+q.options.forEach((op,i)=>{
+
+let checked=
+responses[current]==i ? "checked":"";
+
+html+=`
+<label class='option'>
+<input type='radio'
+name='opt'
+value='${i}'
+${checked}>
+${op}
+</label>
+`;
+
+});
+
+document.getElementById("quiz").innerHTML=html;
+}
+
+loadQ();
+
+function saveAns(){
+let sel=
+document.querySelector(
+'input[name="opt"]:checked'
+);
+
+if(sel){
+responses[current]=parseInt(sel.value);
+}
+}
+
+function nextQ(){
+saveAns();
+if(current<questions.length-1){
+current++;
+loadQ();
+}
+}
+
+function prevQ(){
+saveAns();
+if(current>0){
+current--;
+loadQ();
+}
+}
+
+function submitTest(){
+
+saveAns();
+
+let score=0;
+
+for(let i=0;i<questions.length;i++){
+
+if(responses[i]===questions[i].answer){
+score+=4;
+}
+else if(responses[i]!==null){
+score-=1;
+}
+
+}
+
+alert(
+"Name: "+
+document.getElementById("name").value+
+"\nScore: "+score+
+"\nOut of 32"
+);
+
+}
+
+let time=10800;
+
+setInterval(()=>{
+
+let m=Math.floor(time/60);
+let s=time%60;
+
+document.getElementById(
+"timer"
+).innerText=
+m+":"+(s<10?"0":"")+s;
+
+time--;
+
+if(time<=0){
+submitTest();
+}
+
+},1000);
+
+</script>
+</body>
+</html>

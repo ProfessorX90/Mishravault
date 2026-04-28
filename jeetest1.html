@@ -1,0 +1,393 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JEE Mock Test with Review</title>
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#eef2ff;
+}
+header{
+background:#142c7d;
+color:white;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+}
+.container{
+display:grid;
+grid-template-columns:3fr 1fr;
+gap:20px;
+padding:20px;
+}
+.main,.side{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+.option{
+display:block;
+margin:12px 0;
+padding:12px;
+background:#eef3ff;
+border-radius:10px;
+}
+.palette{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:8px;
+}
+.qbtn{
+padding:10px;
+border:none;
+border-radius:8px;
+background:#dbe4ff;
+cursor:pointer;
+}
+.answered{background:#8de38d;}
+button{
+padding:12px 18px;
+margin:8px;
+border:none;
+border-radius:10px;
+background:#142c7d;
+color:white;
+cursor:pointer;
+}
+#result{display:none}
+</style>
+</head>
+<body>
+
+<header>
+<h2>JEE MOCK TEST</h2>
+<h2 id="timer">180:00</h2>
+</header>
+
+<div class="container">
+
+<div class="main">
+<div id="testArea">
+<h3 id="subject"></h3>
+<h2 id="question"></h2>
+<div id="options"></div>
+
+<button onclick="prevQ()">Previous</button>
+<button onclick="nextQ()">Save & Next</button>
+<button onclick="submitTest()">Submit</button>
+
+<br><br>
+<b>Attempted : <span id="attempted">0</span>/75</b>
+</div>
+
+<div id="result"></div>
+</div>
+
+<div class="side">
+<h3>Question Palette</h3>
+<div class="palette" id="palette"></div>
+</div>
+
+</div>
+
+<script>
+
+const questions=[
+
+// PHYSICS 2024 PYQ STYLE (1-30)
+
+{subject:"Physics",q:"Photoelectric effect: λ=200nm photon ejects electron with KE 2eV. Work function?",options:["4.2eV","6.2eV","8.2eV","2.2eV"],answer:0},
+
+{subject:"Physics",q:"A capacitor C and 2C connected series equivalent capacitance",options:["2C/3","3C/2","C","C/2"],answer:0},
+
+{subject:"Physics",q:"A particle x=t³−6t²+9t instantaneous velocity at t=1",options:["0","3","6","9"],answer:1},
+
+{subject:"Physics",q:"Current electricity: 2Ω,4Ω parallel equivalent",options:["4/3","2","6","3"],answer:0},
+
+{subject:"Physics",q:"Moment of inertia disc about diameter",options:["MR²/2","MR²/4","MR²","2MR²"],answer:1},
+
+{subject:"Physics",q:"A Carnot engine source500K sink300K efficiency",options:["20","40","60","80"],answer:1},
+
+{subject:"Physics",q:"Ray optics focal length 20cm power",options:["2D","5D","10D","0.5D"],answer:1},
+
+{subject:"Physics",q:"Wave speed λ=6m f=5Hz",options:["25","30","35","40"],answer:1},
+
+{subject:"Physics",q:"Magnetic field long straight wire varies",options:["r","1/r","r²","1/r²"],answer:1},
+
+{subject:"Physics",q:"If speed doubles deBroglie wavelength",options:["double","half","same","quadruple"],answer:1},
+
+{subject:"Physics",q:"SHM acceleration proportional",options:["x","1/x","v","constant"],answer:0},
+{subject:"Physics",q:"Torque zero implies",options:["L zero","L conserved","L infinite","L doubles"],answer:1},
+{subject:"Physics",q:"Projectile max range angle",options:["30","45","60","90"],answer:1},
+{subject:"Physics",q:"Escape speed Earth",options:["7.9","11.2","15","20"],answer:1},
+{subject:"Physics",q:"Photon energy proportional",options:["mass","frequency","radius","density"],answer:1},
+
+// numerical style
+{subject:"Physics",q:"Numerical: 5kg body,10N force acceleration?",options:["1","2","3","4"],answer:1},
+{subject:"Physics",q:"Numerical: momentum 3kg×4m/s",options:["7","12","15","18"],answer:1},
+{subject:"Physics",q:"Numerical: 12V across 3Ω current",options:["2","3","4","5"],answer:2},
+{subject:"Physics",q:"Numerical: KE if m=2,v=3",options:["9","18","12","6"],answer:0},
+{subject:"Physics",q:"Numerical: lens f=50cm power",options:["1","2","3","4"],answer:1},
+
+{subject:"Physics",q:"Semiconductor diode forward bias resistance",options:["high","low","zero","infinite"],answer:1},
+{subject:"Physics",q:"YDSE fringe width proportional",options:["λD/d","d/λ","1/D","dD"],answer:0},
+{subject:"Physics",q:"Work done equipotential path",options:["0","1","2","depends"],answer:0},
+{subject:"Physics",q:"Power factor pure resistor",options:["0","1","2","1/2"],answer:1},
+{subject:"Physics",q:"Angular momentum unit",options:["kgm²/s","J","N","Pa"],answer:0},
+
+{subject:"Physics",q:"Bohr radius depends on",options:["n²","n","1/n","n³"],answer:0},
+{subject:"Physics",q:"Transformer works on",options:["dc","mutual induction","electrolysis","gravity"],answer:1},
+{subject:"Physics",q:"Hooke law valid in",options:["plastic","elastic limit","fracture","all"],answer:1},
+{subject:"Physics",q:"Dimensionless quantity",options:["strain","stress","pressure","force"],answer:0},
+{subject:"Physics",q:"Current measured by",options:["ammeter","voltmeter","galvanometer","meter"],answer:0},
+
+// CHEMISTRY 31-60
+
+{subject:"Chemistry",q:"Most electronegative element",options:["O","F","Cl","N"],answer:1},
+{subject:"Chemistry",q:"Hybridization of SF6",options:["sp3","sp3d","sp3d2","d2sp3"],answer:2},
+{subject:"Chemistry",q:"Bond order of O2+",options:["1.5","2","2.5","3"],answer:2},
+{subject:"Chemistry",q:"Oxidation no. Mn in KMnO4",options:["4","5","6","7"],answer:3},
+{subject:"Chemistry",q:"Strongest acid",options:["HF","HCl","CH3COOH","H2O"],answer:1},
+
+{subject:"Chemistry",q:"pH of 10^-3 M HCl",options:["2","3","4","5"],answer:1},
+{subject:"Chemistry",q:"Rate constant first order unit",options:["s^-1","molL^-1","Lmol^-1","none"],answer:0},
+{subject:"Chemistry",q:"Catalyst lowers",options:["Pressure","Activation energy","Mass","Volume"],answer:1},
+{subject:"Chemistry",q:"Ideal gas equation",options:["PV=nRT","F=ma","V=IR","E=mc²"],answer:0},
+{subject:"Chemistry",q:"Aromatic rule",options:["2n","4n","4n+2","n²"],answer:2},
+
+{subject:"Chemistry",q:"Coordination no in [Co(NH3)6]3+",options:["4","5","6","8"],answer:2},
+{subject:"Chemistry",q:"Most acidic hydrogen",options:["alkane","alkene","alkyne","benzene"],answer:2},
+{subject:"Chemistry",q:"sp hybrid bond angle",options:["90","109.5","120","180"],answer:3},
+{subject:"Chemistry",q:"Avogadro number",options:["6.022e23","3e8","100","1e6"],answer:0},
+{subject:"Chemistry",q:"Diamond is allotrope of",options:["Si","C","Fe","S"],answer:1},
+
+// numerical-style
+{subject:"Chemistry",q:"1 mole NaCl contains particles",options:["6.022e23","3e23","12e23","1e23"],answer:0},
+{subject:"Chemistry",q:"Equivalent wt H2SO4",options:["49","98","24.5","196"],answer:0},
+{subject:"Chemistry",q:"Molarity 1 mole in 1L",options:["1","2","0.5","10"],answer:0},
+{subject:"Chemistry",q:"Molality 1 mole in 500g solvent",options:["1","2","3","4"],answer:1},
+{subject:"Chemistry",q:"2 moles O2 molecules count",options:["NA","2NA","3NA","4NA"],answer:1},
+
+{subject:"Chemistry",q:"Entropy highest in",options:["solid","liquid","gas","solution"],answer:2},
+{subject:"Chemistry",q:"Le Chatelier opposes",options:["stress","pressure","volume","heat"],answer:0},
+{subject:"Chemistry",q:"Electron discovered by",options:["Bohr","Thomson","Dalton","Rutherford"],answer:1},
+{subject:"Chemistry",q:"Maximum covalency phosphorus",options:["3","4","5","6"],answer:2},
+{subject:"Chemistry",q:"Strongest reducing alkali metal",options:["Li","Na","K","Rb"],answer:0},
+
+{subject:"Chemistry",q:"XeF4 geometry",options:["tetra","square planar","octa","trigonal"],answer:1},
+{subject:"Chemistry",q:"Hybridization C2H2",options:["sp","sp2","sp3","dsp"],answer:0},
+{subject:"Chemistry",q:"Oxidation means",options:["gain e","loss e","gain p","none"],answer:1},
+{subject:"Chemistry",q:"Most stable carbocation",options:["1°","2°","3°","methyl"],answer:2},
+{subject:"Chemistry",q:"Benzene nitration is",options:["addition","substitution","elimination","redox"],answer:1},
+// CHEMISTRY 31-60
+
+{subject:"Chemistry",q:"Most electronegative element",options:["O","F","Cl","N"],answer:1},
+{subject:"Chemistry",q:"Hybridization of SF6",options:["sp3","sp3d","sp3d2","d2sp3"],answer:2},
+{subject:"Chemistry",q:"Bond order of O2+",options:["1.5","2","2.5","3"],answer:2},
+{subject:"Chemistry",q:"Oxidation no. Mn in KMnO4",options:["4","5","6","7"],answer:3},
+{subject:"Chemistry",q:"Strongest acid",options:["HF","HCl","CH3COOH","H2O"],answer:1},
+
+{subject:"Chemistry",q:"pH of 10^-3 M HCl",options:["2","3","4","5"],answer:1},
+{subject:"Chemistry",q:"Rate constant first order unit",options:["s^-1","molL^-1","Lmol^-1","none"],answer:0},
+{subject:"Chemistry",q:"Catalyst lowers",options:["Pressure","Activation energy","Mass","Volume"],answer:1},
+{subject:"Chemistry",q:"Ideal gas equation",options:["PV=nRT","F=ma","V=IR","E=mc²"],answer:0},
+{subject:"Chemistry",q:"Aromatic rule",options:["2n","4n","4n+2","n²"],answer:2},
+
+{subject:"Chemistry",q:"Coordination no in [Co(NH3)6]3+",options:["4","5","6","8"],answer:2},
+{subject:"Chemistry",q:"Most acidic hydrogen",options:["alkane","alkene","alkyne","benzene"],answer:2},
+{subject:"Chemistry",q:"sp hybrid bond angle",options:["90","109.5","120","180"],answer:3},
+{subject:"Chemistry",q:"Avogadro number",options:["6.022e23","3e8","100","1e6"],answer:0},
+{subject:"Chemistry",q:"Diamond is allotrope of",options:["Si","C","Fe","S"],answer:1},
+
+// numerical-style
+{subject:"Chemistry",q:"1 mole NaCl contains particles",options:["6.022e23","3e23","12e23","1e23"],answer:0},
+{subject:"Chemistry",q:"Equivalent wt H2SO4",options:["49","98","24.5","196"],answer:0},
+{subject:"Chemistry",q:"Molarity 1 mole in 1L",options:["1","2","0.5","10"],answer:0},
+{subject:"Chemistry",q:"Molality 1 mole in 500g solvent",options:["1","2","3","4"],answer:1},
+{subject:"Chemistry",q:"2 moles O2 molecules count",options:["NA","2NA","3NA","4NA"],answer:1},
+
+{subject:"Chemistry",q:"Entropy highest in",options:["solid","liquid","gas","solution"],answer:2},
+{subject:"Chemistry",q:"Le Chatelier opposes",options:["stress","pressure","volume","heat"],answer:0},
+{subject:"Chemistry",q:"Electron discovered by",options:["Bohr","Thomson","Dalton","Rutherford"],answer:1},
+{subject:"Chemistry",q:"Maximum covalency phosphorus",options:["3","4","5","6"],answer:2},
+{subject:"Chemistry",q:"Strongest reducing alkali metal",options:["Li","Na","K","Rb"],answer:0},
+
+{subject:"Chemistry",q:"XeF4 geometry",options:["tetra","square planar","octa","trigonal"],answer:1},
+{subject:"Chemistry",q:"Hybridization C2H2",options:["sp","sp2","sp3","dsp"],answer:0},
+{subject:"Chemistry",q:"Oxidation means",options:["gain e","loss e","gain p","none"],answer:1},
+{subject:"Chemistry",q:"Most stable carbocation",options:["1°","2°","3°","methyl"],answer:2},
+{subject:"Chemistry",q:"Benzene nitration is",options:["addition","substitution","elimination","redox"],answer:1},
+];
+
+
+let current=0;
+let responses=new Array(questions.length).fill(null);
+
+function buildPalette(){
+let html='';
+for(let i=0;i<questions.length;i++){
+html+=`<button class='qbtn' id='p${i}' onclick='jump(${i})'>${i+1}</button>`;
+}
+document.getElementById('palette').innerHTML=html;
+}
+
+function loadQuestion(){
+let q=questions[current];
+
+document.getElementById('subject').innerText=q.subject;
+document.getElementById('question').innerText='Q'+(current+1)+'. '+q.q;
+
+let html='';
+q.options.forEach((op,i)=>{
+let checked=responses[current]===i?'checked':'';
+html+=`
+<label class='option'>
+<input type='radio' name='opt' value='${i}' ${checked}>
+${op}
+</label>`;
+});
+
+document.getElementById('options').innerHTML=html;
+updateAttempted();
+}
+
+function updateAttempted(){
+document.getElementById('attempted').innerText=
+responses.filter(x=>x!==null).length;
+}
+
+function saveAnswer(){
+let s=document.querySelector('input[name="opt"]:checked');
+if(s){
+if(
+responses[current]==null &&
+responses.filter(x=>x!==null).length>=75
+){
+alert('Maximum 75 attempts allowed');
+return;
+}
+responses[current]=parseInt(s.value);
+document.getElementById('p'+current).classList.add('answered');
+}
+updateAttempted();
+}
+
+function nextQ(){
+saveAnswer();
+if(current<questions.length-1){
+current++;
+loadQuestion();
+}
+}
+
+function prevQ(){
+saveAnswer();
+if(current>0){
+current--;
+loadQuestion();
+}
+}
+
+function jump(n){
+saveAnswer();
+current=n;
+loadQuestion();
+}
+
+function submitTest(){
+
+saveAnswer();
+
+let score=0;
+let correct=0;
+let attempted=0;
+
+for(let i=0;i<questions.length;i++){
+
+if(responses[i]!==null){
+attempted++;
+
+if(responses[i]===questions[i].answer){
+score+=4;
+correct++;
+}
+else{
+score-=1;
+}
+
+}
+}
+
+document.getElementById('testArea').style.display='none';
+
+let review='';
+
+for(let i=0;i<questions.length;i++){
+
+let ua=responses[i];
+let ca=questions[i].answer;
+let color='';
+let status='';
+
+if(ua===null){
+color='#f1f1f1';
+status='⚪ Not Attempted';
+}
+else if(ua===ca){
+color='#dcffdc';
+status='✅ Correct';
+}
+else{
+color='#ffdada';
+status='❌ Wrong';
+}
+
+review+=`
+<div style="background:${color};padding:20px;margin:20px 0;border-radius:15px;">
+<h3>Q${i+1}. ${questions[i].q}</h3>
+<p><b>Your Answer:</b> ${ua===null?'Not Attempted':questions[i].options[ua]}</p>
+<p><b>Correct Answer:</b> ${questions[i].options[ca]}</p>
+<p>${status}</p>
+</div>
+`;
+
+}
+
+document.getElementById('result').style.display='block';
+document.getElementById('result').innerHTML=`
+<h1>Score Card</h1>
+<h2>Score: ${score}</h2>
+<h3>Attempted: ${attempted}</h3>
+<h3>Correct: ${correct}</h3>
+<h3>Accuracy: ${attempted?Math.round(correct/attempted*100):0}%</h3>
+<hr>
+<h2>Detailed Review</h2>
+${review}
+`;
+
+window.scrollTo(0,0);
+}
+
+let time=10800;
+setInterval(function(){
+let m=Math.floor(time/60);
+let s=time%60;
+document.getElementById('timer').innerText=
+m+':' +(s<10?'0':'')+s;
+time--;
+if(time<=0) submitTest();
+},1000);
+
+buildPalette();
+loadQuestion();
+
+</script>
+
+</body>
+</html>
+```
+

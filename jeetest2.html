@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JEE Mock Test with Review</title>
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#eef2ff;
+}
+header{
+background:#142c7d;
+color:white;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+}
+.container{
+display:grid;
+grid-template-columns:3fr 1fr;
+gap:20px;
+padding:20px;
+}
+.main,.side{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+.option{
+display:block;
+margin:12px 0;
+padding:12px;
+background:#eef3ff;
+border-radius:10px;
+}
+.palette{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:8px;
+}
+.qbtn{
+padding:10px;
+border:none;
+border-radius:8px;
+background:#dbe4ff;
+cursor:pointer;
+}
+.answered{background:#8de38d;}
+button{
+padding:12px 18px;
+margin:8px;
+border:none;
+border-radius:10px;
+background:#142c7d;
+color:white;
+cursor:pointer;
+}
+#result{display:none}
+</style>
+</head>
+<body>
+
+<header>
+<h2>JEE MOCK TEST</h2>
+<h2 id="timer">180:00</h2>
+</header>
+
+<div class="container">
+
+<div class="main">
+<div id="testArea">
+<h3 id="subject"></h3>
+<h2 id="question"></h2>
+<div id="options"></div>
+
+<button onclick="prevQ()">Previous</button>
+<button onclick="nextQ()">Save & Next</button>
+<button onclick="submitTest()">Submit</button>
+
+<br><br>
+<b>Attempted : <span id="attempted">0</span>/75</b>
+</div>
+
+<div id="result"></div>
+</div>
+
+<div class="side">
+<h3>Question Palette</h3>
+<div class="palette" id="palette"></div>
+</div>
+
+</div>
+
+<script>
+
+
+const questions=[
+
+// PHYSICS 2023 STYLE
+
+{subject:"Physics",q:"A body projected at 45° has maximum range because",options:["u max","sin2θ max","g min","time max"],answer:1},
+{subject:"Physics",q:"Work done in one full circular revolution",options:["0","positive","negative","infinite"],answer:0},
+{subject:"Physics",q:"Two resistors 3Ω and6Ω parallel",options:["1","2","3","4"],answer:1},
+{subject:"Physics",q:"Current through 24V across6Ω",options:["2","3","4","5"],answer:2},
+{subject:"Physics",q:"Angular momentum conserved if",options:["force zero","torque zero","mass zero","speed zero"],answer:1},
+
+{subject:"Physics",q:"Escape speed Earth",options:["7.9","11.2","15","20"],answer:1},
+{subject:"Physics",q:"deBroglie wavelength inversely proportional",options:["mass","momentum","energy","charge"],answer:1},
+{subject:"Physics",q:"Power of lens f=25cm",options:["2","3","4","5"],answer:2},
+{subject:"Physics",q:"Wave speed λ=4,f=5",options:["10","15","20","25"],answer:2},
+{subject:"Physics",q:"SHM acceleration proportional",options:["x","1/x","v","constant"],answer:0},
+
+{subject:"Physics",q:"Photon energy depends on",options:["mass","frequency","radius","density"],answer:1},
+{subject:"Physics",q:"YDSE fringe width ∝",options:["λD/d","d/λ","1/D","dD"],answer:0},
+{subject:"Physics",q:"Unit magnetic flux",options:["Tesla","Weber","Henry","Volt"],answer:1},
+{subject:"Physics",q:"Moment inertia disc diameter",options:["MR²/4","MR²/2","MR²","2MR²"],answer:0},
+{subject:"Physics",q:"Carnot engine500K-300K efficiency",options:["20","40","60","80"],answer:1},
+
+// numerical style
+{subject:"Physics",q:"Force 20N on5kg acceleration",options:["2","3","4","5"],answer:2},
+{subject:"Physics",q:"Momentum4kg×3m/s",options:["7","10","12","15"],answer:2},
+{subject:"Physics",q:"KE m=2,v=4",options:["8","16","12","10"],answer:1},
+{subject:"Physics",q:"12V across4Ω current",options:["2","3","4","5"],answer:1},
+{subject:"Physics",q:"Potential work on equipotential",options:["0","1","2","depends"],answer:0},
+
+{subject:"Physics",q:"Bohr radius ∝",options:["n","n²","1/n","n³"],answer:1},
+{subject:"Physics",q:"Transformer works on",options:["dc","mutual induction","electrolysis","gravity"],answer:1},
+{subject:"Physics",q:"Dimensionless quantity",options:["stress","strain","pressure","force"],answer:1},
+{subject:"Physics",q:"Hooke law valid till",options:["fracture","elastic limit","plastic","all"],answer:1},
+{subject:"Physics",q:"Current measured by",options:["ammeter","voltmeter","meter","galvanometer"],answer:0},
+
+{subject:"Physics",q:"If speed doubles KE",options:["2x","4x","8x","same"],answer:1},
+{subject:"Physics",q:"Torque doubles angular accel",options:["half","double","same","zero"],answer:1},
+{subject:"Physics",q:"Capacitor energy if V doubled",options:["2x","4x","8x","same"],answer:1},
+{subject:"Physics",q:"Photoelectric stopping potential depends",options:["intensity","frequency","distance","current"],answer:1},
+{subject:"Physics",q:"Magnetic field wire varies as",options:["r","1/r","r²","1/r²"],answer:1},
+
+ // CHEMISTRY 31-60
+
+{subject:"Chemistry",q:"Most electronegative element",options:["O","F","N","Cl"],answer:1},
+{subject:"Chemistry",q:"Hybridization CH4",options:["sp","sp2","sp3","dsp"],answer:2},
+{subject:"Chemistry",q:"Hybridization SF6",options:["sp3","sp3d","sp3d2","d2sp3"],answer:2},
+{subject:"Chemistry",q:"Bond order O2+",options:["1.5","2","2.5","3"],answer:2},
+{subject:"Chemistry",q:"Oxidation state Mn in KMnO4",options:["4","5","6","7"],answer:3},
+
+{subject:"Chemistry",q:"Strong acid",options:["HF","HCl","CH3COOH","H2O"],answer:1},
+{subject:"Chemistry",q:"Ideal gas law",options:["PV=nRT","V=IR","F=ma","E=mc²"],answer:0},
+{subject:"Chemistry",q:"Catalyst lowers",options:["Pressure","Activation energy","Mass","Volume"],answer:1},
+{subject:"Chemistry",q:"Aromatic compounds follow",options:["2n","4n","4n+2","n²"],answer:2},
+{subject:"Chemistry",q:"Coordination no [Co(NH3)6]3+",options:["4","5","6","8"],answer:2},
+
+{subject:"Chemistry",q:"Most acidic hydrogen",options:["alkane","alkene","alkyne","benzene"],answer:2},
+{subject:"Chemistry",q:"sp hybrid angle",options:["90","109.5","120","180"],answer:3},
+{subject:"Chemistry",q:"Avogadro number",options:["6.022e23","3e8","1e6","100"],answer:0},
+{subject:"Chemistry",q:"Diamond allotrope of",options:["Si","C","Fe","S"],answer:1},
+{subject:"Chemistry",q:"Electron discovered by",options:["Bohr","Thomson","Dalton","Rutherford"],answer:1},
+
+// numerical style
+{subject:"Chemistry",q:"Equivalent wt H2SO4",options:["49","98","24.5","196"],answer:0},
+{subject:"Chemistry",q:"1 mole in 500mL molarity",options:["1","2","3","4"],answer:1},
+{subject:"Chemistry",q:"Molality 1 mole/500g",options:["1","2","3","4"],answer:1},
+{subject:"Chemistry",q:"2 moles O2 molecules",options:["NA","2NA","3NA","4NA"],answer:1},
+{subject:"Chemistry",q:"pH of 10^-4 HCl",options:["3","4","5","6"],answer:1},
+
+{subject:"Chemistry",q:"Entropy highest",options:["solid","liquid","gas","solution"],answer:2},
+{subject:"Chemistry",q:"Le Chatelier opposes",options:["stress","volume","heat","pressure"],answer:0},
+{subject:"Chemistry",q:"Maximum covalency phosphorus",options:["3","4","5","6"],answer:2},
+{subject:"Chemistry",q:"Strongest reducing alkali metal",options:["Li","Na","K","Rb"],answer:0},
+{subject:"Chemistry",q:"XeF4 geometry",options:["tetra","square planar","octa","trigonal"],answer:1},
+
+{subject:"Chemistry",q:"Hybridization C2H2",options:["sp","sp2","sp3","dsp"],answer:0},
+{subject:"Chemistry",q:"Oxidation means",options:["gain e","loss e","gain p","none"],answer:1},
+{subject:"Chemistry",q:"Most stable carbocation",options:["1°","2°","3°","methyl"],answer:2},
+{subject:"Chemistry",q:"Benzene nitration is",options:["addition","substitution","elimination","redox"],answer:1},
+{subject:"Chemistry",q:"First order unit",options:["s^-1","Lmol^-1","molL^-1","none"],answer:0},
+ // MATHEMATICS 61-90
+
+{subject:"Math",q:"Derivative x^x",options:["x^x","x^x(lnx+1)","lnx","xlnx"],answer:1},
+{subject:"Math",q:"Derivative sinx",options:["cosx","tanx","secx","-cosx"],answer:0},
+{subject:"Math",q:"Integral ∫x dx",options:["x²","x²/2","2x","lnx"],answer:1},
+{subject:"Math",q:"lim sinx/x",options:["0","1","2","∞"],answer:1},
+{subject:"Math",q:"tan45°",options:["0","1","2","∞"],answer:1},
+
+{subject:"Math",q:"sin30°",options:["0","1/2","1","√3"],answer:1},
+{subject:"Math",q:"Maximum sinx+cosx",options:["1","√2","2","0"],answer:1},
+{subject:"Math",q:"log10(1000)",options:["2","3","4","10"],answer:1},
+{subject:"Math",q:"Roots x²−5x+6 product",options:["5","6","11","30"],answer:1},
+{subject:"Math",q:"Slope y=mx+b",options:["m","x","b","1"],answer:0},
+
+{subject:"Math",q:"det(I)",options:["0","1","2","n"],answer:1},
+{subject:"Math",q:"det[[1,2],[3,4]]",options:["-2","2","1","0"],answer:0},
+{subject:"Math",q:"Eigenvalue zero means matrix",options:["unit","orthogonal","singular","symmetric"],answer:2},
+{subject:"Math",q:"5C2",options:["5","10","20","25"],answer:1},
+{subject:"Math",q:"5P2",options:["5","10","20","25"],answer:2},
+
+// numerical-style
+{subject:"Math",q:"Probability impossible event",options:["0","1","1/2","-1"],answer:0},
+{subject:"Math",q:"Probability sure event",options:["0","1","2","∞"],answer:1},
+{subject:"Math",q:"At least one head in two tosses",options:["1/4","1/2","3/4","1"],answer:2},
+{subject:"Math",q:"lim(1+1/n)^n",options:["1","e","∞","0"],answer:1},
+{subject:"Math",q:"Area under y=x from0to1",options:["1","1/2","2","1/3"],answer:1},
+
+{subject:"Math",q:"Derivative lnx",options:["x","1/x","lnx","e^x"],answer:1},
+{subject:"Math",q:"Roots x²−1",options:["1","-1","±1","0"],answer:2},
+{subject:"Math",q:"x²+y²=1 has",options:["1","finite","infinite","0"],answer:2},
+{subject:"Math",q:"Derivative x³",options:["x²","2x","3x²","3x"],answer:2},
+{subject:"Math",q:"Integral cosx",options:["sinx","tanx","secx","-sinx"],answer:0},
+
+{subject:"Math",q:"Binomial symmetry",options:["nCr=nC(n-r)","false","random","none"],answer:0},
+{subject:"Math",q:"Mean=Median=Mode for",options:["skewed","normal symmetric","random","bimodal"],answer:1},
+{subject:"Math",q:"Continuous differentiable implies",options:["vice versa false","same","opposite","none"],answer:0},
+{subject:"Math",q:"Equation x²−4=0 roots",options:["±2","±4","2","4"],answer:0},
+{subject:"Math",q:"Derivative e^x",options:["e^x","x","1","lnx"],answer:0},
+
+];
+
+let current=0;
+let responses=new Array(questions.length).fill(null);
+
+function buildPalette(){
+let html='';
+for(let i=0;i<questions.length;i++){
+html+=`<button class='qbtn' id='p${i}' onclick='jump(${i})'>${i+1}</button>`;
+}
+document.getElementById('palette').innerHTML=html;
+}
+
+function loadQuestion(){
+let q=questions[current];
+
+document.getElementById('subject').innerText=q.subject;
+document.getElementById('question').innerText='Q'+(current+1)+'. '+q.q;
+
+let html='';
+q.options.forEach((op,i)=>{
+let checked=responses[current]===i?'checked':'';
+html+=`
+<label class='option'>
+<input type='radio' name='opt' value='${i}' ${checked}>
+${op}
+</label>`;
+});
+
+document.getElementById('options').innerHTML=html;
+updateAttempted();
+}
+
+function updateAttempted(){
+document.getElementById('attempted').innerText=
+responses.filter(x=>x!==null).length;
+}
+
+function saveAnswer(){
+let s=document.querySelector('input[name="opt"]:checked');
+if(s){
+if(
+responses[current]==null &&
+responses.filter(x=>x!==null).length>=75
+){
+alert('Maximum 75 attempts allowed');
+return;
+}
+responses[current]=parseInt(s.value);
+document.getElementById('p'+current).classList.add('answered');
+}
+updateAttempted();
+}
+
+function nextQ(){
+saveAnswer();
+if(current<questions.length-1){
+current++;
+loadQuestion();
+}
+}
+
+function prevQ(){
+saveAnswer();
+if(current>0){
+current--;
+loadQuestion();
+}
+}
+
+function jump(n){
+saveAnswer();
+current=n;
+loadQuestion();
+}
+
+function submitTest(){
+
+saveAnswer();
+
+let score=0;
+let correct=0;
+let attempted=0;
+
+for(let i=0;i<questions.length;i++){
+
+if(responses[i]!==null){
+attempted++;
+
+if(responses[i]===questions[i].answer){
+score+=4;
+correct++;
+}
+else{
+score-=1;
+}
+
+}
+}
+
+document.getElementById('testArea').style.display='none';
+
+let review='';
+
+for(let i=0;i<questions.length;i++){
+
+let ua=responses[i];
+let ca=questions[i].answer;
+let color='';
+let status='';
+
+if(ua===null){
+color='#f1f1f1';
+status='⚪ Not Attempted';
+}
+else if(ua===ca){
+color='#dcffdc';
+status='✅ Correct';
+}
+else{
+color='#ffdada';
+status='❌ Wrong';
+}
+
+review+=`
+<div style="background:${color};padding:20px;margin:20px 0;border-radius:15px;">
+<h3>Q${i+1}. ${questions[i].q}</h3>
+<p><b>Your Answer:</b> ${ua===null?'Not Attempted':questions[i].options[ua]}</p>
+<p><b>Correct Answer:</b> ${questions[i].options[ca]}</p>
+<p>${status}</p>
+</div>
+`;
+
+}
+
+document.getElementById('result').style.display='block';
+document.getElementById('result').innerHTML=`
+<h1>Score Card</h1>
+<h2>Score: ${score}</h2>
+<h3>Attempted: ${attempted}</h3>
+<h3>Correct: ${correct}</h3>
+<h3>Accuracy: ${attempted?Math.round(correct/attempted*100):0}%</h3>
+<hr>
+<h2>Detailed Review</h2>
+${review}
+`;
+
+window.scrollTo(0,0);
+}
+
+let time=10800;
+setInterval(function(){
+let m=Math.floor(time/60);
+let s=time%60;
+document.getElementById('timer').innerText=
+m+':' +(s<10?'0':'')+s;
+time--;
+if(time<=0) submitTest();
+},1000);
+
+buildPalette();
+loadQuestion();
+
+</script>
+
+</body>
+</html>

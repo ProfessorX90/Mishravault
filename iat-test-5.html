@@ -1,0 +1,817 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IAT Test 5 Hard Mock</title>
+<style>
+body{margin:0;font-family:Arial;background:#eef2ff}
+header{background:#142c7d;color:#fff;padding:15px 30px;display:flex;justify-content:space-between}
+.container{display:grid;grid-template-columns:3fr 1fr;gap:20px;padding:25px}
+.main,.side{background:#fff;padding:25px;border-radius:18px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.option{display:block;padding:12px;margin:12px 0;background:#f1f5ff;border-radius:10px}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.qbtn{padding:10px;border:none;background:#dbe4ff;border-radius:8px;cursor:pointer}
+.answered{background:#79d879}
+.action{padding:12px 20px;margin:8px;border:none;background:#142c7d;color:#fff;border-radius:10px;cursor:pointer}
+#result{display:none;font-size:22px;line-height:2}
+</style>
+</head>
+<body>
+<header>
+<h2>IAT TEST 5 (60 Questions)</h2>
+<h2 id="timer">180:00</h2>
+</header>
+
+<div class="container">
+<div class="main">
+<div id="testArea">
+<h3 id="subject"></h3>
+<h2 id="question"></h2>
+<div id="options"></div>
+<button class="action" onclick="prevQ()">Previous</button>
+<button class="action" onclick="nextQ()">Save & Next</button>
+<button class="action" onclick="submitTest()">Submit</button>
+</div>
+<div id="result"></div>
+</div>
+
+<div class="side">
+<h3>Question Palette</h3>
+<div class="palette" id="palette"></div>
+</div>
+</div>
+
+<script>
+const questions=[
+
+// ---------- PHYSICS (15) ----------
+
+{
+subject:"Physics",
+q:"A particle starts from rest and moves with acceleration a=2t. Distance covered in first 3 seconds is",
+options:["6 m","9 m","12 m","18 m"],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"A rod expands freely. If temperature doubles in Kelvin, length change depends primarily on",
+options:[
+"Original length only",
+"Coefficient and temperature rise",
+"Mass of rod",
+"Density only"
+],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"A block slides down rough incline. If angle increases and coefficient stays same, acceleration",
+options:[
+"Always decreases",
+"Always increases",
+"May increase depending on μ",
+"Becomes zero"
+],
+answer:2
+},
+
+{
+subject:"Physics",
+q:"A conducting loop enters magnetic field region. Induced current exists",
+options:[
+"Only fully inside field",
+"Only while flux changes",
+"Always",
+"Never"
+],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"A projectile reaches same range on two angles θ1 and θ2. Then relation is",
+options:[
+"θ1+θ2=45°",
+"θ1+θ2=90°",
+"θ1θ2=1",
+"θ1=θ2 only"
+],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"Two springs k and 2k in series equivalent constant",
+options:["3k","2k/3","k/2","k"],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"If radius doubles and charge constant electric field at surface becomes",
+options:["same","half","one-fourth","double"],
+answer:2
+},
+
+{
+subject:"Physics",
+q:"A Carnot engine efficiency increases when",
+options:[
+"Sink temperature rises",
+"Source temperature rises",
+"Both equal",
+"Volume rises"
+],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"A body moving relativistically can exceed c",
+options:["Yes","No","Only in vacuum","Only photons"],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"Interference fringe width proportional to",
+options:["λD/d","d/λ","1/D","none"],
+answer:0
+},
+
+{
+subject:"Physics",
+q:"If torque zero angular momentum",
+options:[
+"must be zero",
+"must increase",
+"conserved",
+"undefined"
+],
+answer:2
+},
+
+{
+subject:"Physics",
+q:"Potential inside conductor in electrostatic equilibrium",
+options:[
+"varies linearly",
+"zero only",
+"constant",
+"infinite"
+],
+answer:2
+},
+
+{
+subject:"Physics",
+q:"Dimensionless quantity among",
+options:[
+"strain",
+"stress",
+"force",
+"pressure"
+],
+answer:0
+},
+
+{
+subject:"Physics",
+q:"Photoelectric stopping potential depends on",
+options:[
+"Intensity",
+"Frequency",
+"Distance",
+"Current"
+],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"Most difficult to conserve in collision",
+options:[
+"Energy",
+"Momentum",
+"Angular momentum",
+"Mass"
+],
+answer:0
+},
+
+
+// ---------- CHEMISTRY (15) ----------
+
+{
+subject:"Chemistry",
+q:"Among isoelectronic species radius largest",
+options:["Na+","Mg2+","F−","O2−"],
+answer:3
+},
+
+{
+subject:"Chemistry",
+q:"Incorrect statement about catalyst",
+options:[
+"changes pathway",
+"lowers activation energy",
+"changes equilibrium constant",
+"regenerated"
+],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Maximum covalency shown by phosphorus",
+options:["3","4","5","6"],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Strongest conjugate base belongs to",
+options:[
+"strong acid",
+"weak acid",
+"neutral salt",
+"buffer"
+],
+answer:1
+},
+
+{
+subject:"Chemistry",
+q:"Entropy highest in",
+options:[
+"solid",
+"liquid",
+"gas",
+"solution"
+],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"d-block colored compounds due to",
+options:[
+"s-s transition",
+"d-d transition",
+"bond angle",
+"hybridization"
+],
+answer:1
+},
+
+{
+subject:"Chemistry",
+q:"Benzene nitration is",
+options:[
+"addition",
+"substitution",
+"elimination",
+"redox"
+],
+answer:1
+},
+
+{
+subject:"Chemistry",
+q:"Rate constant unit first order",
+options:[
+"s^-1",
+"molL^-1",
+"Lmol^-1",
+"none"
+],
+answer:0
+},
+
+{
+subject:"Chemistry",
+q:"Most acidic hydrogen among",
+options:[
+"alkane",
+"alkene",
+"alkyne",
+"benzene"
+],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Coordination no in [Fe(CN)6]4−",
+options:["4","5","6","8"],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Oxidation no of Cr in dichromate",
+options:["4","5","6","7"],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Le Chatelier principle shifts equilibrium against",
+options:[
+"stress",
+"temperature",
+"pressure",
+"volume"
+],
+answer:0
+},
+
+{
+subject:"Chemistry",
+q:"sp hybrid bond angle",
+options:["109.5","120","180","90"],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Most reducing species",
+options:["Li","Na","K","Cs"],
+answer:0
+},
+
+{
+subject:"Chemistry",
+q:"Aromatic condition follows",
+options:[
+"2n",
+"4n",
+"4n+2",
+"n²"
+],
+answer:2
+},
+
+
+// ---------- MATHEMATICS (15) ----------
+
+{
+subject:"Math",
+q:"If matrix determinant zero system may be",
+options:[
+"always unique",
+"inconsistent or infinite",
+"always impossible",
+"always trivial"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Derivative of x^x",
+options:[
+"x^x",
+"x^x(lnx+1)",
+"lnx",
+"xlnx"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"If probability impossible event",
+options:["1","0","1/2","-1"],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Number of solutions x²+y²=1 over reals",
+options:[
+"finite",
+"infinite",
+"zero",
+"one"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"If sinA=cosA then A",
+options:["30","45","60","90"],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Integral e^x sinx type belongs",
+options:[
+"substitution",
+"parts",
+"partial fraction",
+"series only"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"If eigenvalue zero matrix is",
+options:[
+"non singular",
+"singular",
+"orthogonal",
+"unit"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"log(ab)=",
+options:[
+"loga+logb",
+"loga-logb",
+"loga/logb",
+"ab"
+],
+answer:0
+},
+
+{
+subject:"Math",
+q:"Continuous differentiable implies",
+options:[
+"vice versa false",
+"equal meaning",
+"differentiable weaker",
+"none"
+],
+answer:0
+},
+
+{
+subject:"Math",
+q:"Maximum value sinx+cosx",
+options:["1","√2","2","0"],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Derivative tanx",
+options:[
+"sec²x",
+"cosec²x",
+"secx",
+"tan²x"
+],
+answer:0
+},
+
+{
+subject:"Math",
+q:"Determinant changes sign when",
+options:[
+"row multiply",
+"row swap",
+"transpose",
+"identity"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Binomial coefficients symmetric due",
+options:[
+"nCr=nC(n-r)",
+"factorial zero",
+"Pascal only",
+"random"
+],
+answer:0
+},
+
+{
+subject:"Math",
+q:"Mean median mode equal in",
+options:[
+"skewed",
+"symmetric",
+"random",
+"bimodal"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Area under positive curve represents",
+options:[
+"volume",
+"integral accumulation",
+"slope",
+"mean only"
+],
+answer:1
+},
+
+
+// ---------- BIOLOGY (15) ----------
+
+{
+subject:"Biology",
+q:"Operon model proposed by",
+options:[
+"Watson-Crick",
+"Jacob-Monod",
+"Mendel",
+"Darwin"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Hardy Weinberg disturbed by",
+options:[
+"mutation",
+"selection",
+"migration",
+"all"
+],
+answer:3
+},
+
+{
+subject:"Biology",
+q:"Most abundant protein earth",
+options:[
+"insulin",
+"rubisco",
+"collagen",
+"actin"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"C4 pathway advantage",
+options:[
+"more photorespiration",
+"less photorespiration",
+"no ATP use",
+"less glucose"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Semiconservative replication proved by",
+options:[
+"Darwin",
+"Meselson Stahl",
+"Watson",
+"Morgan"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"If both parents heterozygous recessive probability",
+options:[
+"1/4",
+"1/2",
+"3/4",
+"1"
+],
+answer:0
+},
+
+{
+subject:"Biology",
+q:"Human nephron functional unit of",
+options:[
+"heart",
+"kidney",
+"brain",
+"liver"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Primary succession starts on",
+options:[
+"fertile soil",
+"bare rock",
+"forest",
+"grassland"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Restriction enzymes act as",
+options:[
+"scissors",
+"ligase",
+"vector",
+"probe"
+],
+answer:0
+},
+
+{
+subject:"Biology",
+q:"Trophic level energy transfer approx",
+options:[
+"1%",
+"10%",
+"50%",
+"90%"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Codon degeneracy means",
+options:[
+"one codon one aa",
+"multiple codons same aa",
+"stop codons",
+"mutation"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Mitochondria inherited maternally due",
+options:[
+"nucleus",
+"cytoplasm",
+"mutation",
+"protein"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Antibody produced by",
+options:[
+"RBC",
+"B cells",
+"platelets",
+"neurons"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Most evolved brain region humans",
+options:[
+"medulla",
+"cerebrum",
+"pons",
+"cerebellum"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Population growth logistic has",
+options:[
+"carrying capacity",
+"no limit",
+"linear growth",
+"constant birth only"
+],
+answer:0
+}
+
+];
+function addQ(s,q,a){
+questions.push({
+subject:s,
+q:q,
+options:["Option A","Option B","Option C","Option D"],
+answer:a
+});
+}
+
+for(let i=1;i<=15;i++){
+addQ('Physics','Hard Physics Question '+i,i%4);
+}
+for(let i=1;i<=15;i++){
+addQ('Chemistry','Hard Chemistry Question '+i,(i+1)%4);
+}
+for(let i=1;i<=15;i++){
+addQ('Mathematics','Hard Math Question '+i,(i+2)%4);
+}
+for(let i=1;i<=15;i++){
+addQ('Biology','Hard Biology Question '+i,(i+3)%4);
+}
+
+let current=0;
+let responses=new Array(questions.length).fill(null);
+
+function buildPalette(){
+let html='';
+for(let i=0;i<questions.length;i++){
+html+=`<button class='qbtn' id='p${i}' onclick='jump(${i})'>${i+1}</button>`;
+}
+document.getElementById('palette').innerHTML=html;
+}
+
+function loadQuestion(){
+let q=questions[current];
+document.getElementById('subject').innerText=q.subject;
+document.getElementById('question').innerText='Q'+(current+1)+'. '+q.q;
+let html='';
+q.options.forEach((op,i)=>{
+let checked=responses[current]===i?'checked':'';
+html+=`<label class='option'><input type='radio' name='opt' value='${i}' ${checked}> ${op}</label>`;
+});
+document.getElementById('options').innerHTML=html;
+}
+
+function saveAnswer(){
+let sel=document.querySelector('input[name="opt"]:checked');
+if(sel){
+responses[current]=parseInt(sel.value);
+document.getElementById('p'+current).classList.add('answered');
+}
+}
+
+function nextQ(){
+saveAnswer();
+if(current<questions.length-1){current++;loadQuestion();}
+}
+
+function prevQ(){
+saveAnswer();
+if(current>0){current--;loadQuestion();}
+}
+
+function jump(n){
+saveAnswer();
+current=n;
+loadQuestion();
+}
+
+function submitTest(){
+saveAnswer();
+let score=0;
+let correct=0;
+for(let i=0;i<questions.length;i++){
+if(responses[i]===questions[i].answer){
+score+=4;
+correct++;
+}else if(responses[i]!==null){
+score-=1;
+}
+}
+
+document.getElementById('testArea').style.display='none';
+document.getElementById('result').style.display='block';
+document.getElementById('result').innerHTML=`
+<h1>Score Card</h1>
+Score: ${score}/240<br>
+Correct: ${correct}<br>
+Attempted: ${responses.filter(x=>x!==null).length}<br>
+Accuracy: ${Math.round(correct/60*100)}%
+`;
+}
+
+let time=10800;
+setInterval(function(){
+let m=Math.floor(time/60);
+let s=time%60;
+document.getElementById('timer').innerText=m+':' +(s<10?'0':'')+s;
+time--;
+if(time<=0){submitTest();}
+},1000);
+
+buildPalette();
+loadQuestion();
+</script>
+</body>
+</html>
+```

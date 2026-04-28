@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IAT Test 4 Hard Mock</title>
+<style>
+body{margin:0;font-family:Arial;background:#eef2ff}
+header{background:#142c7d;color:#fff;padding:15px 30px;display:flex;justify-content:space-between}
+.container{display:grid;grid-template-columns:3fr 1fr;gap:20px;padding:25px}
+.main,.side{background:#fff;padding:25px;border-radius:18px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.option{display:block;padding:12px;margin:12px 0;background:#f1f5ff;border-radius:10px}
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.qbtn{padding:10px;border:none;background:#dbe4ff;border-radius:8px;cursor:pointer}
+.answered{background:#79d879}
+.action{padding:12px 20px;margin:8px;border:none;background:#142c7d;color:#fff;border-radius:10px;cursor:pointer}
+#result{display:none;font-size:22px;line-height:2}
+</style>
+</head>
+<body>
+<header>
+<h2>IAT TEST 4 (60 Questions)</h2>
+<h2 id="timer">180:00</h2>
+</header>
+
+<div class="container">
+<div class="main">
+<div id="testArea">
+<h3 id="subject"></h3>
+<h2 id="question"></h2>
+<div id="options"></div>
+<button class="action" onclick="prevQ()">Previous</button>
+<button class="action" onclick="nextQ()">Save & Next</button>
+<button class="action" onclick="submitTest()">Submit</button>
+</div>
+<div id="result"></div>
+</div>
+
+<div class="side">
+<h3>Question Palette</h3>
+<div class="palette" id="palette"></div>
+</div>
+</div>
+
+<script>
+const questions=[
+
+// PHYSICS
+{
+subject:"Physics",
+q:"A particle moves in SHM. Acceleration is proportional to",
+options:[
+"displacement",
+"velocity",
+"time",
+"mass"
+],
+answer:0
+},
+
+{
+subject:"Physics",
+q:"Capacitance of parallel plate capacitor depends on",
+options:[
+"Area",
+"Distance",
+"Dielectric",
+"All of these"
+],
+answer:3
+},
+
+{
+subject:"Physics",
+q:"Escape velocity from Earth is closest to",
+options:[
+"7.9 km/s",
+"11.2 km/s",
+"15 km/s",
+"5 km/s"
+],
+answer:1
+},
+
+{
+subject:"Physics",
+q:"Dimensional formula of Planck constant is",
+options:[
+"ML²T⁻¹",
+"MLT⁻²",
+"M²LT",
+"LT"
+],
+answer:0
+},
+
+{
+subject:"Physics",
+q:"Magnetic field inside long solenoid is",
+options:[
+"constant",
+"zero",
+"infinite",
+"variable"
+],
+answer:0
+},
+
+// CHEMISTRY
+{
+subject:"Chemistry",
+q:"Order of reaction can be",
+options:[
+"negative",
+"fractional",
+"zero",
+"all of these"
+],
+answer:3
+},
+
+{
+subject:"Chemistry",
+q:"Strongest reducing agent among alkali metals",
+options:[
+"Li",
+"Na",
+"K",
+"Cs"
+],
+answer:0
+},
+
+{
+subject:"Chemistry",
+q:"Shape of NH3 is",
+options:[
+"tetrahedral",
+"trigonal pyramidal",
+"linear",
+"planar"
+],
+answer:1
+},
+
+{
+subject:"Chemistry",
+q:"p-block element among these",
+options:[
+"Na",
+"Ca",
+"Cl",
+"Sc"
+],
+answer:2
+},
+
+{
+subject:"Chemistry",
+q:"Hybridization in ethene",
+options:[
+"sp",
+"sp2",
+"sp3",
+"dsp2"
+],
+answer:1
+},
+
+// MATH
+{
+subject:"Math",
+q:"Derivative of ln x",
+options:[
+"x",
+"1/x",
+"e^x",
+"x²"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Integral of cosx",
+options:[
+"sinx",
+"-sinx",
+"tanx",
+"secx"
+],
+answer:0
+},
+
+{
+subject:"Math",
+q:"If determinant is zero matrix is",
+options:[
+"invertible",
+"singular",
+"identity",
+"orthogonal"
+],
+answer:1
+},
+
+{
+subject:"Math",
+q:"Slope of y=mx+b",
+options:[
+"b",
+"x",
+"m",
+"1"
+],
+answer:2
+},
+
+{
+subject:"Math",
+q:"lim sinx/x as x→0",
+options:[
+0,1,2,"∞"
+],
+answer:1
+},
+
+// BIOLOGY
+{
+subject:"Biology",
+q:"DNA replication is",
+options:[
+"conservative",
+"semi-conservative",
+"dispersive",
+"random"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Site of photosynthesis",
+options:[
+"chloroplast",
+"mitochondria",
+"ribosome",
+"nucleus"
+],
+answer:0
+},
+
+{
+subject:"Biology",
+q:"Hardy Weinberg law relates to",
+options:[
+"evolution",
+"equilibrium",
+"mutation",
+"speciation"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Genetic material in most organisms",
+options:[
+"RNA",
+"DNA",
+"protein",
+"lipid"
+],
+answer:1
+},
+
+{
+subject:"Biology",
+q:"Mendel's law of segregation related to",
+options:[
+"alleles",
+"chromosomes",
+"proteins",
+"enzymes"
+],answer:0
+}
+];
+function addQ(s,q,a){
+questions.push({
+subject:s,
+q:q,
+options:["Option A","Option B","Option C","Option D"],
+answer:a
+});
+}
+
+for(let i=1;i<=15;i++){
+addQ('Physics','Hard Physics Question '+i,i%4);
+}
+for(let i=1;i<=15;i++){
+addQ('Chemistry','Hard Chemistry Question '+i,(i+1)%4);
+}
+for(let i=1;i<=15;i++){
+addQ('Mathematics','Hard Math Question '+i,(i+2)%4);
+}
+for(let i=1;i<=15;i++){
+addQ('Biology','Hard Biology Question '+i,(i+3)%4);
+}
+
+let current=0;
+let responses=new Array(questions.length).fill(null);
+
+function buildPalette(){
+let html='';
+for(let i=0;i<questions.length;i++){
+html+=`<button class='qbtn' id='p${i}' onclick='jump(${i})'>${i+1}</button>`;
+}
+document.getElementById('palette').innerHTML=html;
+}
+
+function loadQuestion(){
+let q=questions[current];
+document.getElementById('subject').innerText=q.subject;
+document.getElementById('question').innerText='Q'+(current+1)+'. '+q.q;
+let html='';
+q.options.forEach((op,i)=>{
+let checked=responses[current]===i?'checked':'';
+html+=`<label class='option'><input type='radio' name='opt' value='${i}' ${checked}> ${op}</label>`;
+});
+document.getElementById('options').innerHTML=html;
+}
+
+function saveAnswer(){
+let sel=document.querySelector('input[name="opt"]:checked');
+if(sel){
+responses[current]=parseInt(sel.value);
+document.getElementById('p'+current).classList.add('answered');
+}
+}
+
+function nextQ(){
+saveAnswer();
+if(current<questions.length-1){current++;loadQuestion();}
+}
+
+function prevQ(){
+saveAnswer();
+if(current>0){current--;loadQuestion();}
+}
+
+function jump(n){
+saveAnswer();
+current=n;
+loadQuestion();
+}
+
+function submitTest(){
+saveAnswer();
+let score=0;
+let correct=0;
+for(let i=0;i<questions.length;i++){
+if(responses[i]===questions[i].answer){
+score+=4;
+correct++;
+}else if(responses[i]!==null){
+score-=1;
+}
+}
+
+document.getElementById('testArea').style.display='none';
+document.getElementById('result').style.display='block';
+document.getElementById('result').innerHTML=`
+<h1>Score Card</h1>
+Score: ${score}/240<br>
+Correct: ${correct}<br>
+Attempted: ${responses.filter(x=>x!==null).length}<br>
+Accuracy: ${Math.round(correct/60*100)}%
+`;
+}
+
+let time=10800;
+setInterval(function(){
+let m=Math.floor(time/60);
+let s=time%60;
+document.getElementById('timer').innerText=m+':' +(s<10?'0':'')+s;
+time--;
+if(time<=0){submitTest();}
+},1000);
+
+buildPalette();
+loadQuestion();
+</script>
+</body>
+</html>
+```
