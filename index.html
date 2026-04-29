@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <title>Mishra Vault</title>
 
+
+
 <style>
 
 *{
@@ -196,104 +198,117 @@ padding:50px;
 margin-top:70px;
 }
 
+#telegramPopup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.75);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.popup-box{
+background:white;
+width:420px;
+max-width:90%;
+padding:35px;
+border-radius:28px;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,.35);
+animation:pop .4s ease;
+}
+
+@keyframes pop{
+from{
+transform:scale(.7);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+.popup-box img{
+width:120px;
+border-radius:50%;
+margin-bottom:18px;
+}
+
+.popup-box h2{
+color:#1d4ed8;
+margin-bottom:15px;
+}
+
+.popup-box p{
+color:#333;
+font-size:18px;
+line-height:1.6;
+margin-bottom:25px;
+}
+
+.join-btn{
+display:inline-block;
+background:#2563eb;
+color:white;
+text-decoration:none;
+padding:14px 28px;
+border-radius:14px;
+font-weight:bold;
+margin-right:10px;
+}
+
+.close-btn{
+background:#ef4444;
+color:white;
+border:none;
+padding:14px 24px;
+border-radius:14px;
+cursor:pointer;
+font-weight:bold;
+}
+
 </style>
 
 </head>
 <body>
+  <div id="telegramPopup">
 
-    <!-- POPUP -->
-<div id="popup" class="popup-overlay">
-  <div class="popup-box">
-    
-    <img src="mishra.png" alt="Mishra Vault" class="popup-img">
+<div class="popup-box">
 
-    <h2>🚀 Welcome to Mishra Vault!</h2>
+<img src="mishra.png">
 
-    <p>
-      📢 Join our Telegram channel for latest updates, notes & free content 💯📚
-    </p>
+<h2>🚀 Join Our Telegram Channel</h2>
 
-    <a href="https://t.me/Mishravault" target="_blank" class="join-btn">
-      🔔 Join Telegram
-    </a>
+<p>
+Get latest notes, test series, updates and free resources daily.
+</p>
 
-    <br><br>
+<a
+href="https://t.me/Mishravault"
+target="_blank"
+class="join-btn">
+Join Telegram
+</a>
 
-    <button onclick="closePopup()" class="close-btn">✖ Close</button>
-  </div>
+<button
+onclick="closePopup()"
+class="close-btn">
+Later
+</button>
+
 </div>
 
-<!-- STYLE -->
-<style>
-.popup-overlay{
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.7);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
+</div>
 
-.popup-box{
-  background: #111;
-  color: #fff;
-  padding: 25px;
-  width: 320px;
-  text-align:center;
-  border-radius: 15px;
-  box-shadow: 0 0 20px #00ffcc;
-  animation: pop 0.4s ease;
-}
-
-@keyframes pop{
-  from{transform:scale(0.5); opacity:0;}
-  to{transform:scale(1); opacity:1;}
-}
-
-.popup-img{
-  width: 100px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-.join-btn{
-  display:inline-block;
-  margin-top:10px;
-  padding:10px 15px;
-  background:#00ffcc;
-  color:#000;
-  font-weight:bold;
-  border-radius:8px;
-  text-decoration:none;
-}
-
-.close-btn{
-  margin-top:10px;
-  background:red;
-  color:white;
-  border:none;
-  padding:8px 12px;
-  border-radius:6px;
-  cursor:pointer;
-}
-</style>
+    
 
 <!-- SCRIPT -->
-<script>
-window.onload = function(){
-  document.getElementById("popup").style.display = "flex";
-}
-
-function closePopup(){
-  document.getElementById("popup").style.display = "none";
-}
-</script>
-
-
+</div>
 
 <nav>
 
@@ -319,20 +334,34 @@ MISHRA <span>VAULT</span>
 Education Without Barriers 🚀
 </p>
 
-<a href="iat.html">
+<a href="handwritennotes.html"></a>
+
 <button class="btn primary">
-Start Mock Tests
+Handwritten notes 
 </button>
 </a>
 
-<button class="btn secondary">
-Free Notes
+<a href="support.html">
+<button class="btn primary">
+Buy me a coffee ☕
 </button>
+</a>
+
+
+
+
 
 
 <div class="social">
 
-<a href="https://t.me/Mishrahelpbot">
+
+  <a href="https://t.me/Mishrahelpbot">
+<button class="btn telegram">
+Contact admin  
+</button>
+</a>
+
+<a href="https://t.me/Mishravault">
 <button class="btn telegram">
 Join Telegram
 </button>
@@ -415,21 +444,69 @@ updated soon
 </div>
 
 </section>
+<script>
+
+function closePopup(){
+document.getElementById(
+"telegramPopup"
+).style.display="none";
+}
+
+</script>
 
 
 <footer>
 
-<h2>MISHRA VAULT</h2>
+
+<h2>☕ BUY me a coffee</h2>
+
+<p>
+If these free notes and tests help you,
+
+</p>
+
+<p> UPI ID :- exsachintendulkar@fam </p>
 
 
+
+
+
+<a
+href="upi://pay?pa=exsachintendulkar@fam&pn=MishraVault&cu=INR"
+style="
+display:inline-block;
+margin-top:20px;
+background:#22c55e;
+color:white;
+padding:14px 28px;
+text-decoration:none;
+border-radius:12px;
+font-weight:bold;
+">
+Pay via UPI App
+</a>
+
+<br><br>
+
+<hr style="
+width:70%;
+margin:auto;
+opacity:.3;
+">
 
 <br>
 
 <p>
-Made with ❤️ by Mishra
+Made with ❤️ by Mishra Vault
+<br>
+Education Without Barriers
 </p>
 
 </footer>
+
+
+
+
 
 </body>
 </html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mishra Vault Biology Notes</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:linear-gradient(135deg,#111827,#1d4ed8);
+color:white;
+}
+
+header{
+padding:30px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+}
+
+.logo span{
+color:#60a5fa;
+}
+
+.top a{
+text-decoration:none;
+background:white;
+color:#111;
+padding:12px 18px;
+border-radius:12px;
+margin-left:10px;
+font-weight:bold;
+}
+
+.hero{
+text-align:center;
+padding:55px 20px;
+}
+
+.hero h1{
+font-size:55px;
+margin-bottom:15px;
+}
+
+.grid{
+max-width:1200px;
+margin:auto;
+padding:50px 30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:white;
+color:#111;
+padding:32px;
+border-radius:28px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+text-align:center;
+}
+
+.card h2{
+font-size:25px;
+margin-bottom:18px;
+}
+
+.btn{
+background:#2563eb;
+color:white;
+padding:14px 24px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#viewer{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.92);
+z-index:999;
+}
+
+#box{
+width:90%;
+height:90%;
+background:white;
+margin:30px auto;
+border-radius:20px;
+overflow:hidden;
+}
+
+.close{
+background:red;
+color:white;
+padding:12px 20px;
+border:none;
+margin:15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+iframe{
+width:100%;
+height:92%;
+border:none;
+}
+
+footer{
+background:#0b1120;
+padding:30px;
+text-align:center;
+margin-top:60px;
+}
+</style>
+</head>
+<body>
+
+<header>
+
+<div class="logo">
+MISHRA <span>VAULT</span>
+</div>
+
+<div class="top">
+<a href="https://t.me/Mishravault">📢 Telegram</a>
+
+</div>
+
+</header>
+
+
+<section class="hero">
+<h1>🧬 Biology Handwritten Notes</h1>
+</section>
+
+
+
+<section class="grid">
+
+
+<div class="card">
+<h2>Cell The Unit of Life</h2>
+<button class="btn"
+onclick="openPDF('pdfs/cell.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Biomolecules</h2>
+<button class="btn"
+onclick="openPDF('pdfs/biomoleculesbio.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Cell Cycle & Division</h2>
+<button class="btn"
+onclick="openPDF('pdfs/cellcycle.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Plant Kingdom</h2>
+<button class="btn"
+onclick="openPDF('pdfs/plantkingdom.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Animal Kingdom</h2>
+<button class="btn"
+onclick="openPDF('pdfs/animalkingdom.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Morphology of Flowering Plants</h2>
+<button class="btn"
+onclick="openPDF('pdfs/morphology.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Anatomy of Plants</h2>
+<button class="btn"
+onclick="openPDF('pdfs/anatomy.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Photosynthesis</h2>
+<button class="btn"
+onclick="openPDF('pdfs/photosynthesis.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Respiration in Plants</h2>
+<button class="btn"
+onclick="openPDF('pdfs/respiration.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Plant Growth Hormones</h2>
+<button class="btn"
+onclick="openPDF('pdfs/plantgrowth.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Human Digestion</h2>
+<button class="btn"
+onclick="openPDF('pdfs/digestion.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Breathing & Respiration</h2>
+<button class="btn"
+onclick="openPDF('pdfs/breathing.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Body Fluids & Circulation</h2>
+<button class="btn"
+onclick="openPDF('pdfs/circulation.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Excretory System</h2>
+<button class="btn"
+onclick="openPDF('pdfs/excretion.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Neural Control</h2>
+<button class="btn"
+onclick="openPDF('pdfs/neural.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Human Reproduction</h2>
+<button class="btn"
+onclick="openPDF('pdfs/reproduction.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Genetics</h2>
+<button class="btn"
+onclick="openPDF('pdfs/genetics.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Molecular Basis of Inheritance</h2>
+<button class="btn"
+onclick="openPDF('pdfs/molecular.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Evolution</h2>
+<button class="btn"
+onclick="openPDF('pdfs/evolution.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Ecology</h2>
+<button class="btn"
+onclick="openPDF('pdfs/ecology.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Biotechnology</h2>
+<button class="btn"
+onclick="openPDF('pdfs/biotech.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Human Health & Disease</h2>
+<button class="btn"
+onclick="openPDF('pdfs/disease.pdf')">
+Preview Notes
+</button>
+</div>
+
+</section>
+
+
+
+
+<div id="viewer">
+
+<div id="box">
+
+<button
+class="close"
+onclick="closePDF()">
+Close
+</button>
+
+<iframe id="pdfFrame"></iframe>
+
+</div>
+
+</div>
+
+
+
+<footer>
+Made with ❤️ by Mishra Vault | Education Without Barriers
+</footer>
+
+
+
+<script>
+
+function openPDF(file){
+document.getElementById(
+'pdfFrame'
+).src=file+'#toolbar=0';
+
+document.getElementById(
+'viewer'
+).style.display='block';
+}
+
+function closePDF(){
+document.getElementById(
+'viewer'
+).style.display='none';
+
+document.getElementById(
+'pdfFrame'
+).src='';
+}
+
+</script>
+
+</body>
+</html>

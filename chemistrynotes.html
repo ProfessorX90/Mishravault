@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mishra Vault Chemistry Notes</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:linear-gradient(135deg,#111827,#1d4ed8);
+color:white;
+}
+
+header{
+padding:30px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+}
+
+.logo span{
+color:#60a5fa;
+}
+
+.top a{
+text-decoration:none;
+background:white;
+color:#111;
+padding:12px 18px;
+border-radius:12px;
+margin-left:10px;
+font-weight:bold;
+}
+
+.hero{
+text-align:center;
+padding:55px 20px;
+}
+
+.hero h1{
+font-size:55px;
+margin-bottom:15px;
+}
+
+.grid{
+max-width:1200px;
+margin:auto;
+padding:50px 30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:white;
+color:#111;
+padding:32px;
+border-radius:28px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+text-align:center;
+}
+
+.card h2{
+font-size:26px;
+margin-bottom:16px;
+}
+
+.card p{
+margin-bottom:22px;
+}
+
+.btn{
+background:#2563eb;
+color:white;
+padding:14px 26px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#viewer{
+display:none;
+position:fixed;
+top:0;
+left:0;
+height:100%;
+width:100%;
+background:rgba(0,0,0,.92);
+z-index:999;
+}
+
+#box{
+width:90%;
+height:90%;
+background:white;
+margin:30px auto;
+border-radius:20px;
+overflow:hidden;
+}
+
+.close{
+background:red;
+color:white;
+border:none;
+padding:12px 20px;
+margin:15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+iframe{
+width:100%;
+height:92%;
+border:none;
+}
+
+footer{
+background:#0b1120;
+text-align:center;
+padding:30px;
+margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+MISHRA <span>VAULT</span>
+</div>
+
+<div class="top">
+<a href="https://t.me/Mishravault">📢 Telegram</a>
+
+</div>
+</header>
+
+
+<section class="hero">
+<h1>🧪 Chemistry Handwritten Notes</h1>
+</section>
+
+
+<section class="grid">
+
+
+<div class="card">
+<h2>Mole Concept</h2>
+<button class="btn"
+onclick="openPDF('pdfs/mole.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Atomic Structure</h2>
+<button class="btn"
+onclick="openPDF('pdfs/atomic.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Periodic Table</h2>
+<button class="btn"
+onclick="openPDF('pdfs/periodic.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Chemical Bonding</h2>
+<button class="btn"
+onclick="openPDF('pdfs/bonding.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Thermodynamics</h2>
+<button class="btn"
+onclick="openPDF('pdfs/chemthermo.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Equilibrium</h2>
+<button class="btn"
+onclick="openPDF('pdfs/equilibrium.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Redox Reaction</h2>
+<button class="btn"
+onclick="openPDF('pdfs/redox.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Electrochemistry</h2>
+<button class="btn"
+onclick="openPDF('pdfs/electrochem.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Chemical Kinetics</h2>
+<button class="btn"
+onclick="openPDF('pdfs/kinetics.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Solutions</h2>
+<button class="btn"
+onclick="openPDF('pdfs/solutions.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Coordination Compounds</h2>
+<button class="btn"
+onclick="openPDF('pdfs/coordination.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>d & f Block</h2>
+<button class="btn"
+onclick="openPDF('pdfs/dfblock.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Hydrocarbons</h2>
+<button class="btn"
+onclick="openPDF('pdfs/hydrocarbons.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Haloalkanes</h2>
+<button class="btn"
+onclick="openPDF('pdfs/haloalkane.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Alcohol Phenol Ether</h2>
+<button class="btn"
+onclick="openPDF('pdfs/alcohol.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Aldehyde Ketone</h2>
+<button class="btn"
+onclick="openPDF('pdfs/aldehyde.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Carboxylic Acid</h2>
+<button class="btn"
+onclick="openPDF('pdfs/carboxy.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Amines</h2>
+<button class="btn"
+onclick="openPDF('pdfs/amines.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Biomolecules</h2>
+<button class="btn"
+onclick="openPDF('pdfs/biomolecules.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>p Block</h2>
+<button class="btn"
+onclick="openPDF('pdfs/pblock.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+</section>
+
+
+
+<div id="viewer">
+
+<div id="box">
+
+<button
+class="close"
+onclick="closePDF()">
+Close
+</button>
+
+<iframe id="pdfFrame"></iframe>
+
+</div>
+
+</div>
+
+
+
+<footer>
+Made with ❤️ by Mishra Vault | Education Without Barriers
+</footer>
+
+
+
+<script>
+
+function openPDF(file){
+document.getElementById(
+'pdfFrame'
+).src=file+'#toolbar=0';
+
+document.getElementById(
+'viewer'
+).style.display='block';
+}
+
+function closePDF(){
+document.getElementById(
+'viewer'
+).style.display='none';
+
+document.getElementById(
+'pdfFrame'
+).src='';
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mishra Vault Physics Notes</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:linear-gradient(135deg,#111827,#1d4ed8);
+color:white;
+}
+
+/* HEADER */
+
+header{
+padding:30px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+}
+
+.logo span{
+color:#60a5fa;
+}
+
+.top a{
+text-decoration:none;
+background:white;
+color:#111;
+padding:12px 18px;
+border-radius:12px;
+margin-left:10px;
+font-weight:bold;
+}
+
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:55px 20px;
+}
+
+.hero h1{
+font-size:55px;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:22px;
+}
+
+
+/* CARDS */
+
+.grid{
+max-width:1200px;
+margin:auto;
+padding:50px 30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:white;
+color:#111;
+padding:32px;
+border-radius:28px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+transition:.3s;
+text-align:center;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h2{
+font-size:28px;
+margin-bottom:15px;
+}
+
+.card p{
+margin-bottom:22px;
+line-height:1.5;
+}
+
+.btn{
+background:#2563eb;
+color:white;
+padding:14px 26px;
+border:none;
+border-radius:12px;
+font-weight:bold;
+cursor:pointer;
+}
+
+
+/* PDF POPUP */
+
+#viewer{
+display:none;
+position:fixed;
+top:0;
+left:0;
+height:100%;
+width:100%;
+background:rgba(0,0,0,.92);
+z-index:999;
+}
+
+#box{
+width:90%;
+height:90%;
+background:white;
+margin:30px auto;
+border-radius:20px;
+overflow:hidden;
+}
+
+.close{
+background:red;
+color:white;
+border:none;
+padding:12px 20px;
+margin:15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+iframe{
+width:100%;
+height:92%;
+border:none;
+}
+
+
+/* FOOTER */
+
+footer{
+background:#0b1120;
+text-align:center;
+padding:30px;
+margin-top:60px;
+}
+
+</style>
+</head>
+<body>
+
+
+<header>
+
+<div class="logo">
+MISHRA <span>VAULT</span>
+</div>
+
+<div class="top">
+<a href="https://t.me/Mishravault">📢 Telegram</a>
+
+</div>
+
+</header>
+
+
+
+<section class="hero">
+<h1>⚛ Physics Handwritten Notes</h1>
+<p>Chapterwise Premium Notes Vault</p>
+</section>
+
+
+
+
+<section class="grid">
+
+
+<div class="card">
+<h2>Vectors</h2>
+<p>Complete handwritten notes + concepts.</p>
+<button class="btn"
+onclick="openPDF('pdfs/vectors.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Motion In Straight Line</h2>
+<p>Kinematics complete chapter notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/straightline.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Motion In Plane</h2>
+<p>Projectile and 2D motion notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/plane.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Laws Of Motion</h2>
+<p>NLM full handwritten notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/nlm.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Work Power Energy</h2>
+<p>WEP chapter notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/wep.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Rotation</h2>
+<p>Full rotational motion notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/rotation.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Thermodynamics</h2>
+<p>Detailed thermo handwritten notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/thermo.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Current Electricity</h2>
+<p>Concept notes + derivations.</p>
+<button class="btn"
+onclick="openPDF('pdfs/current.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Ray Optics</h2>
+<p>Ray optics full notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/optics.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Modern Physics</h2>
+<p>Atoms nuclei semiconductor notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/modern.pdf')">
+Preview Notes
+</button>
+</div>
+
+<div class="card">
+<h2>Gravitation</h2>
+<p>Complete gravitation handwritten notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/gravitation.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Mechanical Properties</h2>
+<p>Elasticity, viscosity, surface tension.</p>
+<button class="btn"
+onclick="openPDF('pdfs/mechanical.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Fluid Mechanics</h2>
+<p>Bernoulli + fluid flow notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/fluids.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>SHM</h2>
+<p>Simple harmonic motion full notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/shm.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Waves</h2>
+<p>Wave motion chapter notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/waves.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Electrostatics</h2>
+<p>Charges, field and potential notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/electrostatics.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Capacitance</h2>
+<p>Capacitors complete notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/capacitance.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Moving Charges & Magnetism</h2>
+<p>Magnetism full notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/magnetism.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>EMI</h2>
+<p>Electromagnetic induction notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/emi.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Alternating Current</h2>
+<p>AC chapter handwritten notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/ac.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Ray Optics</h2>
+<p>Reflection, refraction full notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/rayoptics.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Wave Optics</h2>
+<p>Interference diffraction notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/waveoptics.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Dual Nature</h2>
+<p>Photoelectric effect notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/dualnature.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Atoms</h2>
+<p>Bohr model and atomic spectra notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/atoms.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Nuclei</h2>
+<p>Nuclear physics complete notes.</p>
+<button class="btn"
+onclick="openPDF('pdfs/nuclei.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Semiconductors</h2>
+<p>Diodes, transistors and logic gates.</p>
+<button class="btn"
+onclick="openPDF('pdfs/semiconductor.pdf')">
+Preview Notes
+</button>
+</div>
+
+</section>
+
+
+
+
+<div id="viewer">
+
+<div id="box">
+
+<button
+class="close"
+onclick="closePDF()">
+Close
+</button>
+
+<iframe id="pdfFrame"></iframe>
+
+</div>
+
+</div>
+
+
+
+
+<footer>
+Made with ❤️ by Mishra Vault | Education Without Barriers
+</footer>
+
+
+
+<script>
+
+function openPDF(file){
+
+document.getElementById(
+"pdfFrame"
+).src=
+file+"#toolbar=0";
+
+document.getElementById(
+"viewer"
+).style.display=
+"block";
+
+}
+
+function closePDF(){
+
+document.getElementById(
+"viewer"
+).style.display=
+"none";
+
+document.getElementById(
+"pdfFrame"
+).src="";
+
+}
+
+</script>
+
+
+</body>
+</html>

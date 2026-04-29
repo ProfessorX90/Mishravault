@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mishra Vault Mathematics Notes</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:linear-gradient(135deg,#111827,#1d4ed8);
+color:white;
+}
+
+header{
+padding:30px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+}
+.logo span{
+color:#60a5fa;
+}
+
+.top a{
+text-decoration:none;
+background:white;
+color:#111;
+padding:12px 18px;
+border-radius:12px;
+margin-left:10px;
+font-weight:bold;
+}
+
+.hero{
+text-align:center;
+padding:55px 20px;
+}
+
+.hero h1{
+font-size:55px;
+}
+
+.grid{
+max-width:1200px;
+margin:auto;
+padding:50px 30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:white;
+color:#111;
+padding:32px;
+border-radius:28px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+text-align:center;
+}
+
+.card h2{
+font-size:26px;
+margin-bottom:18px;
+}
+
+.btn{
+background:#2563eb;
+color:white;
+padding:14px 24px;
+border:none;
+border-radius:12px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#viewer{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.92);
+z-index:999;
+}
+
+#box{
+width:90%;
+height:90%;
+background:white;
+margin:30px auto;
+border-radius:20px;
+overflow:hidden;
+}
+
+.close{
+background:red;
+color:white;
+padding:12px 20px;
+border:none;
+margin:15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+iframe{
+width:100%;
+height:92%;
+border:none;
+}
+
+footer{
+background:#0b1120;
+padding:30px;
+text-align:center;
+margin-top:60px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">
+MISHRA <span>VAULT</span>
+</div>
+
+<div class="top">
+<a href="https://t.me/Mishravault">📢 Telegram</a>
+
+
+</div>
+</header>
+
+
+
+<section class="hero">
+<h1>🧮 Mathematics Handwritten Notes</h1>
+</section>
+
+
+
+<section class="grid">
+
+
+<div class="card">
+<h2>Sets Relations Functions</h2>
+<button class="btn"
+onclick="openPDF('pdfs/sets.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Quadratic Equations</h2>
+<button class="btn"
+onclick="openPDF('pdfs/quadratic.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Sequences & Series</h2>
+<button class="btn"
+onclick="openPDF('pdfs/apgp.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Permutation Combination</h2>
+<button class="btn"
+onclick="openPDF('pdfs/pnc.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Binomial Theorem</h2>
+<button class="btn"
+onclick="openPDF('pdfs/binomial.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Complex Numbers</h2>
+<button class="btn"
+onclick="openPDF('pdfs/complex.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Matrices</h2>
+<button class="btn"
+onclick="openPDF('pdfs/matrices.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Determinants</h2>
+<button class="btn"
+onclick="openPDF('pdfs/determinants.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Limits</h2>
+<button class="btn"
+onclick="openPDF('pdfs/limits.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Continuity & Differentiability</h2>
+<button class="btn"
+onclick="openPDF('pdfs/cd.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Application of Derivatives</h2>
+<button class="btn"
+onclick="openPDF('pdfs/aod.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Indefinite Integration</h2>
+<button class="btn"
+onclick="openPDF('pdfs/integration.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Definite Integration</h2>
+<button class="btn"
+onclick="openPDF('pdfs/definite.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Differential Equations</h2>
+<button class="btn"
+onclick="openPDF('pdfs/de.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Vector Algebra</h2>
+<button class="btn"
+onclick="openPDF('pdfs/vectoralg.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>3D Geometry</h2>
+<button class="btn"
+onclick="openPDF('pdfs/3d.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Straight Lines</h2>
+<button class="btn"
+onclick="openPDF('pdfs/straightlines.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Circle</h2>
+<button class="btn"
+onclick="openPDF('pdfs/circle.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Parabola</h2>
+<button class="btn"
+onclick="openPDF('pdfs/parabola.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Ellipse</h2>
+<button class="btn"
+onclick="openPDF('pdfs/ellipse.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Hyperbola</h2>
+<button class="btn"
+onclick="openPDF('pdfs/hyperbola.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Probability</h2>
+<button class="btn"
+onclick="openPDF('pdfs/probability.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Statistics</h2>
+<button class="btn"
+onclick="openPDF('pdfs/statistics.pdf')">
+Preview Notes
+</button>
+</div>
+
+
+<div class="card">
+<h2>Trigonometric Functions</h2>
+<button class="btn"
+onclick="openPDF('pdfs/trigonometry.pdf')">
+Preview Notes
+</button>
+</div>
+
+</section>
+
+
+
+
+<div id="viewer">
+<div id="box">
+
+<button
+class="close"
+onclick="closePDF()">
+Close
+</button>
+
+<iframe id="pdfFrame"></iframe>
+
+</div>
+</div>
+
+
+
+
+<footer>
+Made with ❤️ by Mishra Vault | Education Without Barriers
+</footer>
+
+
+
+<script>
+
+function openPDF(file){
+document.getElementById(
+'pdfFrame'
+).src=file+'#toolbar=0';
+
+document.getElementById(
+'viewer'
+).style.display='block';
+}
+
+function closePDF(){
+document.getElementById(
+'viewer'
+).style.display='none';
+
+document.getElementById(
+'pdfFrame'
+).src='';
+}
+
+</script>
+
+</body>
+</html>

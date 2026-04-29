@@ -1,48 +1,127 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>IAT Test 5 Hard Mock</title>
+<title>IAT Mock Test</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#eef2ff}
-header{background:#142c7d;color:#fff;padding:15px 30px;display:flex;justify-content:space-between}
-.container{display:grid;grid-template-columns:3fr 1fr;gap:20px;padding:25px}
-.main,.side{background:#fff;padding:25px;border-radius:18px;box-shadow:0 4px 14px rgba(0,0,0,.08)}
-.option{display:block;padding:12px;margin:12px 0;background:#f1f5ff;border-radius:10px}
-.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.qbtn{padding:10px;border:none;background:#dbe4ff;border-radius:8px;cursor:pointer}
-.answered{background:#79d879}
-.action{padding:12px 20px;margin:8px;border:none;background:#142c7d;color:#fff;border-radius:10px;cursor:pointer}
-#result{display:none;font-size:22px;line-height:2}
+body{
+margin:0;
+font-family:Arial;
+background:#eef4ff;
+}
+
+header{
+background:#0d47a1;
+color:white;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+}
+
+.container{
+display:grid;
+grid-template-columns:3fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+.main,.side{
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
+
+.option{
+display:block;
+margin:12px 0;
+padding:14px;
+background:#eef3ff;
+border-radius:12px;
+}
+
+button{
+padding:12px 18px;
+margin:8px;
+border:none;
+border-radius:10px;
+background:#1565c0;
+color:white;
+cursor:pointer;
+}
+
+.palette{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:8px;
+}
+
+.qbtn{
+padding:10px;
+border:none;
+border-radius:8px;
+background:#d6e4ff;
+}
+
+.answered{
+background:#8be28b;
+}
+
+#result{
+display:none;
+}
 </style>
 </head>
 <body>
+
+
 <header>
-<h2>IAT TEST 5 (60 Questions)</h2>
+<h2>IAT MOCK TEST</h2>
 <h2 id="timer">180:00</h2>
 </header>
 
+
 <div class="container">
+
 <div class="main">
+
 <div id="testArea">
+
 <h3 id="subject"></h3>
 <h2 id="question"></h2>
+
 <div id="options"></div>
-<button class="action" onclick="prevQ()">Previous</button>
-<button class="action" onclick="nextQ()">Save & Next</button>
-<button class="action" onclick="submitTest()">Submit</button>
+
+<button onclick="prevQ()">Previous</button>
+<button onclick="nextQ()">Save & Next</button>
+<button onclick="submitTest()">Submit</button>
+
+<br><br>
+
+<b>
+Attempted:
+<span id="attempted">0</span>/60
+</b>
+
 </div>
+
 <div id="result"></div>
+
 </div>
+
 
 <div class="side">
 <h3>Question Palette</h3>
 <div class="palette" id="palette"></div>
 </div>
+
 </div>
 
+
+
 <script>
+
 const questions=[
 
 // ---------- PHYSICS (15) ----------
@@ -707,67 +786,136 @@ answer:0
 }
 
 ];
-function addQ(s,q,a){
-questions.push({
-subject:s,
-q:q,
-options:["Option A","Option B","Option C","Option D"],
-answer:a
-});
-}
 
-for(let i=1;i<=15;i++){
-addQ('Physics','Hard Physics Question '+i,i%4);
-}
-for(let i=1;i<=15;i++){
-addQ('Chemistry','Hard Chemistry Question '+i,(i+1)%4);
-}
-for(let i=1;i<=15;i++){
-addQ('Mathematics','Hard Math Question '+i,(i+2)%4);
-}
-for(let i=1;i<=15;i++){
-addQ('Biology','Hard Biology Question '+i,(i+3)%4);
-}
 
 let current=0;
-let responses=new Array(questions.length).fill(null);
+let responses=
+new Array(questions.length).fill(null);
+
 
 function buildPalette(){
-let html='';
+
+let html="";
+
 for(let i=0;i<questions.length;i++){
-html+=`<button class='qbtn' id='p${i}' onclick='jump(${i})'>${i+1}</button>`;
+
+html+=`
+<button
+class='qbtn'
+id='p${i}'
+onclick='jump(${i})'
+>
+${i+1}
+</button>
+`;
+
 }
-document.getElementById('palette').innerHTML=html;
+
+document.getElementById(
+"palette"
+).innerHTML=html;
+
 }
+
 
 function loadQuestion(){
+
 let q=questions[current];
-document.getElementById('subject').innerText=q.subject;
-document.getElementById('question').innerText='Q'+(current+1)+'. '+q.q;
-let html='';
+
+document.getElementById(
+"subject"
+).innerText=q.subject;
+
+document.getElementById(
+"question"
+).innerText=
+"Q"+(current+1)+". "+q.q;
+
+
+let html="";
+
 q.options.forEach((op,i)=>{
-let checked=responses[current]===i?'checked':'';
-html+=`<label class='option'><input type='radio' name='opt' value='${i}' ${checked}> ${op}</label>`;
+
+let checked=
+responses[current]===i
+?
+"checked":"";
+
+html+=`
+<label class='option'>
+<input
+type='radio'
+name='opt'
+value='${i}'
+${checked}
+>
+${op}
+</label>
+`;
+
 });
-document.getElementById('options').innerHTML=html;
+
+document.getElementById(
+"options"
+).innerHTML=html;
+
+updateAttempted();
+
 }
 
+
+
+function updateAttempted(){
+
+document.getElementById(
+"attempted"
+).innerText=
+responses.filter(
+x=>x!==null
+).length;
+
+}
+
+
+
 function saveAnswer(){
-let sel=document.querySelector('input[name="opt"]:checked');
-if(sel){
-responses[current]=parseInt(sel.value);
-document.getElementById('p'+current).classList.add('answered');
+
+let s=document.querySelector(
+'input[name="opt"]:checked'
+);
+
+if(s){
+
+responses[current]=
+parseInt(s.value);
+
+document.getElementById(
+"p"+current
+).classList.add(
+"answered"
+);
+
 }
+
+updateAttempted();
+
 }
+
 
 function nextQ(){
 saveAnswer();
-if(current<questions.length-1){current++;loadQuestion();}
+if(current<questions.length-1){
+current++;
+loadQuestion();
+}
 }
 
 function prevQ(){
 saveAnswer();
-if(current>0){current--;loadQuestion();}
+if(current>0){
+current--;
+loadQuestion();
+}
 }
 
 function jump(n){
@@ -776,42 +924,179 @@ current=n;
 loadQuestion();
 }
 
+
+
 function submitTest(){
+
 saveAnswer();
+
 let score=0;
 let correct=0;
+let attempted=0;
+
 for(let i=0;i<questions.length;i++){
-if(responses[i]===questions[i].answer){
+
+if(responses[i]!==null){
+
+attempted++;
+
+if(
+responses[i]===
+questions[i].answer
+){
 score+=4;
 correct++;
-}else if(responses[i]!==null){
+}
+else{
 score-=1;
 }
+
 }
 
-document.getElementById('testArea').style.display='none';
-document.getElementById('result').style.display='block';
-document.getElementById('result').innerHTML=`
-<h1>Score Card</h1>
-Score: ${score}/240<br>
-Correct: ${correct}<br>
-Attempted: ${responses.filter(x=>x!==null).length}<br>
-Accuracy: ${Math.round(correct/60*100)}%
-`;
 }
+
+document.getElementById(
+"testArea"
+).style.display="none";
+
+
+let review="";
+
+for(let i=0;i<questions.length;i++){
+
+let ua=responses[i];
+let ca=questions[i].answer;
+
+let color="";
+let status="";
+
+if(ua===null){
+color="#eee";
+status="⚪ Not Attempted";
+}
+
+else if(ua===ca){
+color="#dcffdc";
+status="✅ Correct";
+}
+
+else{
+color="#ffd9d9";
+status="❌ Wrong";
+}
+
+
+review+=`
+
+<div style="
+background:${color};
+padding:20px;
+margin:20px 0;
+border-radius:15px;
+">
+
+<h3>
+Q${i+1}
+${questions[i].q}
+</h3>
+
+<p>
+Your Answer:
+<b>
+${
+ua===null
+?
+"Not Attempted"
+:
+questions[i].options[ua]
+}
+</b>
+</p>
+
+<p>
+Correct:
+<b>
+${questions[i].options[ca]}
+</b>
+</p>
+
+<p>${status}</p>
+
+</div>
+
+`;
+
+}
+
+
+document.getElementById(
+"result"
+).style.display="block";
+
+
+document.getElementById(
+"result"
+).innerHTML=`
+
+<h1>IAT SCORECARD</h1>
+
+<h2>Score: ${score}</h2>
+
+<h3>Attempted:
+${attempted}</h3>
+
+<h3>Correct:
+${correct}</h3>
+
+<h3>Accuracy:
+${attempted?
+Math.round(correct/attempted*100):0}%
+</h3>
+
+<hr>
+
+<h2>Detailed Analysis</h2>
+
+${review}
+
+`;
+
+window.scrollTo(0,0);
+
+}
+
+
+
 
 let time=10800;
+
 setInterval(function(){
-let m=Math.floor(time/60);
-let s=time%60;
-document.getElementById('timer').innerText=m+':' +(s<10?'0':'')+s;
+
+let m=
+Math.floor(time/60);
+
+let s=
+time%60;
+
+document.getElementById(
+"timer"
+).innerText=
+m+":"+(s<10?"0":"")+s;
+
 time--;
-if(time<=0){submitTest();}
+
+if(time<=0){
+submitTest();
+}
+
 },1000);
+
+
 
 buildPalette();
 loadQuestion();
+
 </script>
+
 </body>
 </html>
-```
