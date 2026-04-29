@@ -1,0 +1,54 @@
+img{
+max-width:100%;
+height:auto;
+}
+
+iframe{
+max-width:100%;
+}
+
+@media (max-width:900px){
+
+header{
+flex-direction:column;
+gap:18px;
+text-align:center;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+padding:30px 20px;
+}
+
+}
+
+@media (max-width:600px){
+
+.logo{
+font-size:28px;
+}
+
+.top a{
+display:block;
+margin:10px auto;
+width:220px;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+.grid{
+grid-template-columns:1fr;
+padding:20px 15px;
+}
+
+.btn{
+width:100%;
+}
+
+}
