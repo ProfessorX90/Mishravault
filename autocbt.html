@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mishra Vault CBT</title>
+
+<style>
+
+/* ===== BACKGROUND ===== */
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+}
+
+/* ===== HEADER ===== */
+.header{
+padding:20px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+letter-spacing:1px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+}
+
+/* ===== CONTAINER ===== */
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+/* ===== PDF VIEW ===== */
+iframe{
+width:100%;
+height:500px;
+border-radius:15px;
+margin-top:20px;
+box-shadow:0 0 25px rgba(0,0,0,0.4);
+}
+
+/* ===== INPUT AREA ===== */
+.upload{
+text-align:center;
+margin-top:20px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:linear-gradient(135deg,#3b82f6,#06b6d4);
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* ===== ANSWER GRID ===== */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(80px,1fr));
+gap:12px;
+margin-top:25px;
+}
+
+.box{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+border-radius:12px;
+padding:10px;
+text-align:center;
+transition:0.2s;
+}
+
+.box:hover{
+transform:translateY(-3px);
+background:rgba(255,255,255,0.2);
+}
+
+.box input{
+width:100%;
+border:none;
+background:transparent;
+color:white;
+font-size:18px;
+text-align:center;
+outline:none;
+}
+
+/* ===== TEXTAREA ===== */
+textarea{
+width:100%;
+border-radius:12px;
+padding:10px;
+margin-top:10px;
+border:none;
+}
+
+/* ===== RESULT ===== */
+.result{
+margin-top:20px;
+background:white;
+color:black;
+padding:20px;
+border-radius:15px;
+display:none;
+}
+
+.stat{
+display:flex;
+justify-content:space-between;
+margin:8px 0;
+font-weight:bold;
+}
+
+.correct{color:green;}
+.wrong{color:red;}
+.na{color:gray;}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">MISHRA VAULT CBT</div>
+
+<div class="container">
+
+<div class="upload">
+<input type="file" id="pdfInput" accept="application/pdf">
+<br><br>
+<button onclick="loadPDF()">Start Test</button>
+</div>
+
+<div id="viewer"></div>
+
+<h3>Answer Key</h3>
+<textarea id="answerKey" placeholder="Paste answers (any format)"></textarea>
+
+<h3>Your Answers</h3>
+<div id="grid" class="grid"></div>
+
+<button onclick="submitTest()">Submit</button>
+
+<div id="resultBox" class="result"></div>
+
+</div>
+
+<script>
+
+let totalQuestions=0;
+
+function loadPDF(){
+
+let file=document.getElementById("pdfInput").files[0];
+if(!file){alert("Upload PDF");return;}
+
+let url=URL.createObjectURL(file);
+document.getElementById("viewer").innerHTML=`<iframe src="${url}"></iframe>`;
+
+totalQuestions=parseInt(prompt("Total Questions?"));
+generateGrid();
+}
+
+function generateGrid(){
+
+let html="";
+for(let i=1;i<=totalQuestions;i++){
+html+=`
+<div class="box">
+Q${i}
+<input id="q${i}" maxlength="1">
+</div>`;
+}
+document.getElementById("grid").innerHTML=html;
+}
+
+function extract(t){
+return (t.toUpperCase().match(/[ABCD]/g)||[]);
+}
+
+function submitTest(){
+
+let key=extract(document.getElementById("answerKey").value);
+let correct=0,wrong=0,na=0;
+let detail="<h3>Analysis</h3>";
+
+for(let i=1;i<=totalQuestions;i++){
+
+let u=document.getElementById("q"+i).value.toUpperCase();
+let a=key[i-1];
+
+if(!u){na++; detail+=`<p class="na">Q${i}: NA</p>`;}
+else if(u===a){correct++; detail+=`<p class="correct">Q${i}: Correct</p>`;}
+else{wrong++; detail+=`<p class="wrong">Q${i}: Wrong (${u} | ${a})</p>`;}
+
+}
+
+let acc=((correct/(correct+wrong))*100||0).toFixed(2);
+
+document.getElementById("resultBox").style.display="block";
+document.getElementById("resultBox").innerHTML=`
+<h2>Score: ${correct}/${totalQuestions}</h2>
+<div class="stat">✔ Correct: ${correct}</div>
+<div class="stat">❌ Wrong: ${wrong}</div>
+<div class="stat">⚪ NA: ${na}</div>
+<div class="stat">📊 Accuracy: ${acc}%</div>
+${detail}
+`;
+
+}
+
+</script>
+
+</body>
+</html>

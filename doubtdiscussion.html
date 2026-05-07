@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mishra Vault Chat Pro</title>
+
+<style>
+body{
+margin:0;
+font-family:Segoe UI;
+background:#111b21;
+color:white;
+}
+
+/* LOGIN */
+#login{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+#login input{
+padding:12px;
+width:250px;
+border:none;
+border-radius:10px;
+margin:6px;
+}
+
+#login button{
+padding:12px 20px;
+border:none;
+background:#25d366;
+color:white;
+border-radius:10px;
+cursor:pointer;
+}
+
+/* CHAT */
+#chatUI{
+display:none;
+height:100vh;
+flex-direction:column;
+}
+
+header{
+background:#202c33;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+#online{
+color:#25d366;
+font-size:14px;
+}
+
+#chat{
+flex:1;
+overflow-y:auto;
+padding:15px;
+background:#0b141a;
+}
+
+.msg{
+max-width:75%;
+padding:10px;
+margin:8px 0;
+border-radius:10px;
+background:#202c33;
+position:relative;
+white-space:pre-wrap;
+}
+
+.you{
+margin-left:auto;
+background:#005c4b;
+}
+
+.time{
+font-size:10px;
+opacity:0.7;
+margin-top:5px;
+}
+
+.del{
+position:absolute;
+top:5px;
+right:8px;
+cursor:pointer;
+color:red;
+}
+
+/* INPUT */
+.footer{
+display:flex;
+padding:10px;
+background:#202c33;
+}
+
+.footer input{
+flex:1;
+padding:10px;
+border:none;
+border-radius:20px;
+margin-right:5px;
+}
+
+.footer button{
+padding:10px;
+border:none;
+background:#25d366;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* ADMIN PANEL */
+#adminPanel{
+display:none;
+background:#000;
+padding:10px;
+font-size:14px;
+}
+
+#adminPanel button{
+margin:5px;
+padding:5px;
+}
+
+/* IMAGE */
+img{
+max-width:200px;
+border-radius:10px;
+margin-top:5px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+<h2>Enter Your Name</h2>
+<input id="username" placeholder="Your name">
+<input id="adminPass" placeholder="Admin password (optional)">
+<button onclick="startChat()">Start Chat</button>
+</div>
+
+<!-- CHAT -->
+<div id="chatUI">
+
+<header>
+<div>💬 Mishra Vault Chat</div>
+<div>
+<span id="online">🟢 0 online</span>
+<button onclick="toggleAdminPanel()" style="margin-left:10px;">Admin</button>
+</div>
+</header>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+<h3>Admin Panel</h3>
+<button onclick="loadUsers()">Refresh Users</button>
+<div id="userList"></div>
+</div>
+
+<div id="chat"></div>
+
+<div class="footer">
+<input id="msg" placeholder="Type message...">
+<button onclick="sendMsg()">➤</button>
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "mishravaultdiscussion.firebaseapp.com",
+  projectId: "mishravaultdiscussion",
+  storageBucket: "mishravaultdiscussion.firebasestorage.app",
+  messagingSenderId: "296480080371",
+  appId: "1:296480080371:web:e200ee93cb98bdbdaa1286"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database().ref("chat");
+const onlineRef = firebase.database().ref("online");
+const bannedRef = firebase.database().ref("banned");
+
+let username = "";
+let isAdmin = false;
+
+/* 🔑 UPDATED ADMIN PASSWORD */
+const ADMIN_PASSWORD = "Mishra90999099@";
+
+/* BLOCKED NAMES */
+function isBlocked(name){
+let bad = ["admin","owner","mishra","professorx"];
+return bad.includes(name.toLowerCase());
+}
+
+/* PREFILL */
+if(localStorage.getItem("name")){
+document.getElementById("username").value = localStorage.getItem("name");
+}
+
+/* START CHAT */
+function startChat(){
+
+username = document.getElementById("username").value.trim();
+let pass = document.getElementById("adminPass").value;
+
+if(username===""){
+alert("Enter name");
+return;
+}
+
+if(isBlocked(username)){
+alert("This username is not allowed!");
+return;
+}
+
+/* CHECK BAN */
+bannedRef.child(username).once("value", snap=>{
+if(snap.exists()){
+alert("You are banned!");
+return;
+}
+
+/* ADMIN LOGIN */
+if(pass === ADMIN_PASSWORD){
+isAdmin = true;
+alert("Admin login successful!");
+}
+
+localStorage.setItem("name", username);
+
+document.getElementById("login").style.display="none";
+document.getElementById("chatUI").style.display="flex";
+
+/* ONLINE */
+let userRef = onlineRef.push(username);
+userRef.onDisconnect().remove();
+
+onlineRef.on("value", snap=>{
+document.getElementById("online").innerText =
+"🟢 " + snap.numChildren() + " online";
+});
+
+});
+}
+
+/* SEND MESSAGE */
+function sendMsg(){
+let msg = document.getElementById("msg").value.trim();
+if(msg==="") return;
+
+db.push({
+name: username,
+msg: msg,
+time: new Date().toLocaleTimeString()
+});
+
+document.getElementById("msg").value="";
+}
+
+/* ENTER KEY */
+document.getElementById("msg").addEventListener("keypress", e=>{
+if(e.key==="Enter") sendMsg();
+});
+
+/* RECEIVE MESSAGE */
+db.on("child_added", snap=>{
+let d = snap.val();
+
+let div = document.createElement("div");
+div.className="msg";
+
+if(d.name === username){
+div.classList.add("you");
+}
+
+let text = document.createElement("div");
+text.innerText = d.name + "\n" + d.msg;
+div.appendChild(text);
+
+/* TIME */
+let t = document.createElement("div");
+t.className="time";
+t.innerText = d.time;
+div.appendChild(t);
+
+/* IMAGE */
+if(d.msg.includes("http")){
+let img = document.createElement("img");
+img.src = d.msg;
+div.appendChild(img);
+}
+
+/* DELETE (ADMIN ONLY) */
+if(isAdmin){
+let del = document.createElement("div");
+del.innerText="🗑";
+del.className="del";
+
+del.onclick=()=>{
+snap.ref.remove();
+div.remove();
+};
+
+div.appendChild(del);
+}
+
+document.getElementById("chat").appendChild(div);
+
+let chatBox = document.getElementById("chat");
+chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+/* BAN USER */
+function banUser(name){
+if(!isAdmin) return;
+bannedRef.child(name).set(true);
+alert(name + " banned");
+}
+
+/* ADMIN PANEL */
+function toggleAdminPanel(){
+if(!isAdmin) return;
+
+let p = document.getElementById("adminPanel");
+p.style.display = p.style.display==="block"?"none":"block";
+loadUsers();
+}
+
+/* LOAD USERS */
+function loadUsers(){
+if(!isAdmin) return;
+
+onlineRef.once("value", snap=>{
+let list = document.getElementById("userList");
+list.innerHTML="";
+
+snap.forEach(user=>{
+let div = document.createElement("div");
+div.innerText = user.val();
+
+let btn = document.createElement("button");
+btn.innerText="Ban";
+btn.onclick=()=>banUser(user.val());
+
+div.appendChild(btn);
+list.appendChild(div);
+});
+});
+}
+
+</script>
+
+</body>
+</html>

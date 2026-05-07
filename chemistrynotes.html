@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="responsive.css">
 <title>Mishra Vault Chemistry Notes</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -20,6 +19,7 @@ background:linear-gradient(135deg,#111827,#1d4ed8);
 color:white;
 }
 
+/* HEADER */
 header{
 padding:30px 8%;
 display:flex;
@@ -46,6 +46,7 @@ margin-left:10px;
 font-weight:bold;
 }
 
+/* HERO */
 .hero{
 text-align:center;
 padding:55px 20px;
@@ -56,6 +57,11 @@ font-size:55px;
 margin-bottom:15px;
 }
 
+.hero p{
+font-size:22px;
+}
+
+/* CARDS */
 .grid{
 max-width:1200px;
 margin:auto;
@@ -71,16 +77,21 @@ color:#111;
 padding:32px;
 border-radius:28px;
 box-shadow:0 15px 35px rgba(0,0,0,.25);
+transition:.3s;
 text-align:center;
+}
+
+.card:hover{
+transform:translateY(-8px);
 }
 
 .card h2{
 font-size:26px;
-margin-bottom:16px;
+margin-bottom:15px;
 }
 
 .card p{
-margin-bottom:22px;
+margin-bottom:20px;
 }
 
 .btn{
@@ -93,6 +104,7 @@ cursor:pointer;
 font-weight:bold;
 }
 
+/* PDF POPUP */
 #viewer{
 display:none;
 position:fixed;
@@ -129,272 +141,155 @@ height:92%;
 border:none;
 }
 
+/* FOOTER */
 footer{
 background:#0b1120;
 text-align:center;
 padding:30px;
 margin-top:60px;
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">
-MISHRA <span>VAULT</span>
-</div>
-
+<div class="logo">MISHRA <span>VAULT</span></div>
 <div class="top">
 <a href="https://t.me/Mishravault">📢 Telegram</a>
-
 </div>
 </header>
 
-
 <section class="hero">
 <h1>🧪 Chemistry Handwritten Notes</h1>
+<p>Chapterwise Premium Notes Vault</p>
 </section>
-
 
 <section class="grid">
 
-    <div class="card">
-<h2>CLASS 11th COMPLETE SHORT NOTES</h2>
-<button class="btn"
-onclick="openPDF('pdfs/mole.pdf')">
-Preview Notes
-</button>
-</div>
-
-<div class="card">
-<h2>Mole Concept</h2>
-<button class="btn"
-onclick="openPDF('pdfs/mole.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Atomic Structure</h2>
-<button class="btn"
-onclick="openPDF('pdfs/atomic.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Periodic Table</h2>
-<button class="btn"
-onclick="openPDF('pdfs/periodic.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Chemical Bonding</h2>
-<button class="btn"
-onclick="openPDF('pdfs/bonding.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Thermodynamics</h2>
-<button class="btn"
-onclick="openPDF('pdfs/chemthermo.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Equilibrium</h2>
-<button class="btn"
-onclick="openPDF('pdfs/equilibrium.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Redox Reaction</h2>
-<button class="btn"
-onclick="openPDF('pdfs/redox.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Electrochemistry</h2>
-<button class="btn"
-onclick="openPDF('pdfs/electrochem.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Chemical Kinetics</h2>
-<button class="btn"
-onclick="openPDF('pdfs/kinetics.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Solutions</h2>
-<button class="btn"
-onclick="openPDF('pdfs/solutions.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Coordination Compounds</h2>
-<button class="btn"
-onclick="openPDF('pdfs/coordination.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>d & f Block</h2>
-<button class="btn"
-onclick="openPDF('pdfs/dfblock.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Hydrocarbons</h2>
-<button class="btn"
-onclick="openPDF('pdfs/hydrocarbons.pdf')">
-Preview Notes
-</button>
-</div>
-
-
-<div class="card">
-<h2>Haloalkanes</h2>
-<button class="btn"
-onclick="openPDF('pdfs/haloalkane.pdf')">
-Preview Notes
-</button>
-</div>
-
-
+<!-- ORGANIC -->
 <div class="card">
 <h2>Alcohol Phenol Ether</h2>
-<button class="btn"
-onclick="openPDF('pdfs/alcohol.pdf')">
-Preview Notes
-</button>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/11YBPe6Fo_ISUkVSPgTKCVapMPyIVNG6p/preview')">Preview Notes</button>
 </div>
-
 
 <div class="card">
-<h2>Aldehyde Ketone</h2>
-<button class="btn"
-onclick="openPDF('pdfs/aldehyde.pdf')">
-Preview Notes
-</button>
+<h2>Aldehyde Ketone COOH</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1onoNavNuqcbn00mszaeknwjdqP0-NGcY/preview')">Preview Notes</button>
 </div>
-
 
 <div class="card">
-<h2>Carboxylic Acid</h2>
-<button class="btn"
-onclick="openPDF('pdfs/carboxy.pdf')">
-Preview Notes
-</button>
+<h2>Haloalkane Haloarene</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1eBCrORdE4iWle9-T1zgahaAw4FlcL1y-/preview')">Preview Notes</button>
 </div>
-
 
 <div class="card">
 <h2>Amines</h2>
-<button class="btn"
-onclick="openPDF('pdfs/amines.pdf')">
-Preview Notes
-</button>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1y3ponyuhEr4f8x4sPmYk9yEjGcS5E9St/preview')">Preview Notes</button>
 </div>
-
 
 <div class="card">
 <h2>Biomolecules</h2>
-<button class="btn"
-onclick="openPDF('pdfs/biomolecules.pdf')">
-Preview Notes
-</button>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1-Kb27igwI0Z_ZobH8sRFn860h8XrNQxz/preview')">Preview Notes</button>
 </div>
-
 
 <div class="card">
-<h2>p Block</h2>
-<button class="btn"
-onclick="openPDF('pdfs/pblock.pdf')">
-Preview Notes
-</button>
+<h2>GOC</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1fXFbtXgH1jp-Rb-rAKrs-MWP94eC8LvR/preview')">Preview Notes</button>
 </div>
 
+<div class="card">
+<h2>Hydrocarbon</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1cTwud5pDgYqi6AhQWUKxUDc2Sk_T8JUa/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>IUPAC Nomenclature</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1LQ-VveK3f46J-yk0bMUDBwhkqtsMppmX/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Polymers</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1OnEH-3ysZbcZjDbg8BbopZZl9ABHxTHc/preview')">Preview Notes</button>
+</div>
+
+<!-- PHYSICAL -->
+<div class="card">
+<h2>Mole Concept</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1dJgmsiJWCFGZwRU31L6APaRXv5x6ert7/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Thermodynamics</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1JMk9FwoOZ1Na1hzJ700opUBB1WZ4f-Gh/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Solutions</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1jnboTFJI0qRateoKVSecMgHXuBOERANg/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Chemical Kinetics</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1gp0QdKEjSNynMPzaTqorLzAbeGIxfCMY/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Electrochemistry</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1XZ-tEHUWzg8uQqoVaAjtJqBs-dk_KU3L/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Chemical Equilibrium</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1e2xAjdq_w9g6s1_bIWgnpd0xKpq3YrtN/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Ionic Equilibrium</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1uAOWUh-2Kwpkt-37MQYK0AortNyrn4If/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>Redox</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1ItygcddnD5SDeAhJxHucZ6lFDnOPQUSK/preview')">Preview Notes</button>
+</div>
+
+<!-- INORGANIC -->
+<div class="card">
+<h2>Coordination Compounds</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1iXwuYgy2k6tDQ2kf2XLSExU6le30yVEm/preview')">Preview Notes</button>
+</div>
+
+<div class="card">
+<h2>P Block</h2>
+<button class="btn" onclick="openPDF('https://drive.google.com/file/d/1bbIhqGKN0mlsOykD2mBOUChgNccYaSxn/preview')">Preview Notes</button>
+</div>
 
 </section>
 
-
-
+<!-- POPUP -->
 <div id="viewer">
-
 <div id="box">
-
-<button
-class="close"
-onclick="closePDF()">
-Close
-</button>
-
+<button class="close" onclick="closePDF()">Close</button>
 <iframe id="pdfFrame"></iframe>
-
 </div>
-
 </div>
-
-
 
 <footer>
 Made with ❤️ by Mishra Vault | Education Without Barriers
 </footer>
 
-
-
 <script>
 
 function openPDF(file){
-document.getElementById(
-'pdfFrame'
-).src=file+'#toolbar=0';
-
-document.getElementById(
-'viewer'
-).style.display='block';
+document.getElementById("pdfFrame").src = file + "#toolbar=0";
+document.getElementById("viewer").style.display = "block";
 }
 
 function closePDF(){
-document.getElementById(
-'viewer'
-).style.display='none';
-
-document.getElementById(
-'pdfFrame'
-).src='';
+document.getElementById("viewer").style.display = "none";
+document.getElementById("pdfFrame").src = "";
 }
 
 </script>

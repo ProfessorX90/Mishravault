@@ -307,8 +307,7 @@ Later
 
 </div>
 
-    
-
+   
 <!-- SCRIPT -->
 </div>
 
@@ -321,11 +320,12 @@ MISHRA <span>VAULT</span>
 <ul>
 <li><a href="#">Home</a></li>
 <li><a href="#tests">Tests</a></li>
-<li><a href="#">Notes</a></li>
+<li><a href="handwritennotes.html">Notes</a></li>
 <li><a href="#">Lectures</a></li>
 </ul>
 
 </nav>
+ 
 
 
 <section class="hero">
@@ -342,16 +342,32 @@ Handwritten notes
 </button>
 </a>
 
+
+
+<a href="autocbt.html">
+<button class="btn primary">
+My auto test
+</button>
+</a>
+
+<a href="doubtdiscussion.html">
+<button class="btn primary">
+Doubt Discussion 
+</button>
+</a>
+
+<a href="helpothers.html">
+<button class="btn primary">
+Help Others 
+</button>
+</a>
+
+
 <a href="support.html">
 <button class="btn primary">
 Buy me a coffee ☕
 </button>
 </a>
-
-
-
-
-
 
 <div class="social">
 
@@ -427,7 +443,7 @@ updated soon
 
 <div class="exam">
 <h3>JEE TEST SERIES</h3>
-<a href="jee.html">
+<a href="JEE.html">
 <button>Open Tests</button>
 </a>
 </div>
@@ -454,7 +470,17 @@ document.getElementById(
 }
 
 </script>
-
+<script>
+function toggleTheme(){
+  if(document.body.style.background === "white"){
+    document.body.style.background = "#0f172a";
+    document.body.style.color = "white";
+  } else {
+    document.body.style.background = "white";
+    document.body.style.color = "black";
+  }
+}
+</script>
 
 <footer>
 

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mishra Vault - Help Others</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:linear-gradient(135deg,#111827,#1d4ed8);
+color:white;
+}
+
+/* HEADER */
+
+header{
+padding:25px;
+background:#0b1120;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.logo{
+font-size:30px;
+font-weight:bold;
+}
+
+.logo span{
+color:#60a5fa;
+}
+
+.upload-btn{
+background:white;
+color:#111;
+padding:12px 20px;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.upload-btn:hover{
+transform:scale(1.05);
+}
+
+/* HERO */
+
+.hero{
+padding:60px 20px;
+text-align:center;
+}
+
+.hero h1{
+font-size:50px;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:20px;
+max-width:700px;
+margin:auto;
+line-height:1.6;
+}
+
+/* TIP */
+
+.tip{
+background:rgba(255,255,255,.1);
+padding:18px;
+margin:20px auto;
+width:90%;
+max-width:900px;
+border-radius:18px;
+text-align:center;
+line-height:1.8;
+font-size:15px;
+}
+
+/* POSTS */
+
+.grid{
+max-width:1200px;
+margin:auto;
+padding:30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:25px;
+}
+
+.card{
+background:white;
+color:#111;
+padding:25px;
+border-radius:24px;
+box-shadow:0 15px 35px rgba(0,0,0,.25);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h2{
+margin-bottom:12px;
+font-size:26px;
+}
+
+.card p{
+margin:10px 0;
+line-height:1.6;
+}
+
+/* BUTTONS */
+
+.btn{
+display:inline-block;
+margin-top:12px;
+padding:12px 20px;
+background:#2563eb;
+color:white;
+border-radius:12px;
+text-decoration:none;
+font-weight:bold;
+margin-right:10px;
+transition:.3s;
+}
+
+.btn:hover{
+transform:scale(1.05);
+}
+
+/* FOOTER */
+
+footer{
+background:#0b1120;
+padding:25px;
+text-align:center;
+margin-top:50px;
+font-size:15px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.hero h1{
+font-size:36px;
+}
+
+.hero p{
+font-size:16px;
+}
+
+.card h2{
+font-size:22px;
+}
+
+header{
+justify-content:center;
+text-align:center;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+<div class="logo">
+MISHRA <span>VAULT</span>
+</div>
+
+<a class="upload-btn"
+href="https://docs.google.com/forms/d/e/1FAIpQLSdhl3p2fbQUHJGe2b0WXaLS2rBEQUDhMhhBTsRFPWCcU8p_NQ/viewform?usp=header"
+target="_blank">
+
+➕ Upload Resource
+
+</a>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<h1>📚 Help Other Students</h1>
+
+<p>
+Share handwritten notes, books, PYQs and useful study materials with students across India.
+</p>
+
+</section>
+
+<!-- TIP -->
+
+<div class="tip">
+
+⚠️ Important:<br><br>
+
+• Upload Google Drive or Telegram links only.<br>
+• Make sure Drive files are set to:<br>
+<b>"Anyone with the link → Viewer"</b><br><br>
+
+Otherwise students cannot access the resource.
+
+</div>
+
+<!-- POSTS -->
+
+<section class="grid" id="helpPosts"></section>
+
+<!-- FOOTER -->
+
+<footer>
+Made with ❤️ by Mishra
+</footer>
+
+<!-- SCRIPT -->
+
+
+
+<script>
+
+const url =
+"https://opensheet.elk.sh/1ROmdGvIk4hZMuTsKImK3VZJfuJtTTpEluOuj4mgxZOs/Form%20Responses%201";
+
+fetch(url)
+.then(res => res.json())
+.then(data => {
+
+console.log(data);
+
+const container =
+document.getElementById("helpPosts");
+
+container.innerHTML = "";
+
+data.reverse().forEach(item => {
+
+let fileLink = "";
+
+// FIND LINK COLUMN AUTOMATICALLY
+for (let key in item){
+
+if(
+key.toLowerCase().includes("google") ||
+key.toLowerCase().includes("telegram") ||
+key.toLowerCase().includes("link")
+){
+fileLink = item[key];
+}
+
+}
+
+let previewLink = fileLink;
+
+if(fileLink.includes("drive.google.com")){
+previewLink =
+fileLink.replace("/view","/preview");
+}
+
+let card = document.createElement("div");
+
+card.className = "card";
+
+card.innerHTML = `
+
+<h2>${item["Material Title"] || "Untitled"}</h2>
+
+<p>
+<b>👤 Uploaded By:</b>
+${item["Your name"] || "Anonymous"}
+</p>
+
+<p>
+${item["Description"] || ""}
+</p>
+
+<a href="${previewLink}"
+target="_blank"
+class="btn">
+
+👀 Preview
+
+</a>
+
+
+`;
+
+container.appendChild(card);
+
+});
+
+})
+.catch(err => {
+
+console.log(err);
+
+document.getElementById("helpPosts").innerHTML = `
+
+<h2 style="text-align:center;width:100%;">
+⚠️ Error loading resources
+</h2>
+
+`;
+
+});
+
+</script>
+
+</body>
+</html>
